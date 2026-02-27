@@ -1,0 +1,8 @@
+name: imageMatchingCA
+channels: 
+  - defaults
+dependencies:
+  - python
+  - rasterio
+  - rasterio.features
+  - rasterio.warp
