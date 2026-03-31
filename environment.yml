@@ -1,6 +1,7 @@
 name: sycamor
 channels:
   - conda-forge
+  - bioconda
   - defaults
 dependencies:
   - _openmp_mutex=4.5=20_gnu
