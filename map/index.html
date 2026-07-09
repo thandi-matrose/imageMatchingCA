@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>syCAMOR - Cellular Automata-based Matching of Optical and Radar Imagery</title>
+    <link href="style.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body>
+    <section id="title">
+        <h1>syCAMOR</h1>
+        <h3>Cellular Automata-based Matching of Optical and Radar Imagery</h3>
+        <p>A Project by Thandi Matrose</p>
+    </section>
+
+    <section id="info">
+        <p>
+            I could have sworn I used to know this place right here<br />
+            I’ve forgotten my mother tongue<br />
+            It’s happened to us both<br />
+            We speak in a chorus of black box models growing larger<br />
+            and consuming more<br />
+            I don’t know how to understand what’s around<br />
+            like a distorted lens has been placed over each eye<br />
+            <br />
+            Won’t you plan a place for me<br />
+            and plan a place for you too?<br />
+            <br />
+            This is the complicated force they call a city<br />
+            You have to see it to believe it
+        </p>
+
+    </section>
+
+    <main>
+
+        <div id="map" class="map-container"></div>
+    </main>
+
+    <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+
+    <script>
+
+        var map = new maplibregl.Map({
+            container: 'map', // container id
+            style: 'https://demotiles.maplibre.org/globe.json', // style URL
+            center: [0, 0], // starting position [lng, lat]
+            zoom: 2 // starting zoom
+        });
+    </script>
+
+</body>
+
+</html>
