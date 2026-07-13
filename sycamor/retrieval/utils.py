@@ -1,10 +1,9 @@
 from enum import Enum
 
 
+
+
 EPSG = 4326
-COORD_REF_SYSTEM = "http://www.opengis.net/def/crs/EPSG/0/" + str(EPSG)
-
-
 
 # class syntax
 class ImageFormat(str, Enum):
@@ -16,3 +15,13 @@ class ImageFormat(str, Enum):
     X_TAR_ARCHIVE = "application/x-tar"
     MIXED_MEDIA = "multipart/mixed"
     OCTET_STREAM = "application/octet-stream"
+
+class BackCoefficient(Enum):
+    BETA0 = 0
+    SIGMA0_ELLIPSOID = 1
+    GAMMA0_ELLIPSOID = 2
+    GAMMA0_TERRAIN = 3
+
+class OrbitDirection(Enum):
+    ASCENDING = 0
+    DESCENDING = 1

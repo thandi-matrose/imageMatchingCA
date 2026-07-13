@@ -1,0 +1,21 @@
+from enum import Enum
+
+
+class LandClass(Enum):
+    # lulc class
+    LOW_DENSITY_URBAN = (1,"Low density urban", [], "#FFFFF")
+    MED_DENSITY_URBAN   = (2,"Medium density urban", [], "#FFFFF")
+    HIGH_DENSITY_URBAN   = (3,"High density urban", [], "#914545")
+    ROADS    = (4,"Roads like highways and streets", [], "#282525")
+    INDUSTRY    = (5,"Industry and construction", [], "#d8d0bf")
+    VEGETATION    = (6,"Vegetation such as forests and grasslands", [], "#486a48")
+    WATER    = (7,"Water bodies", [], "#FFFFF")
+
+    def __init__(self, index: int, description:str , atlasCodes: list, colour: str):
+        self.index = index
+        self.description = description
+        self.atlasCodes = atlasCodes
+        self.colour = colour
+
+    
+    

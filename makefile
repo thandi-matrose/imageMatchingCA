@@ -11,10 +11,22 @@ env_create:
 	$(CONDA_BIN) env create -f environment.yml || $(CONDA_BIN) env update -f environment.yml
 
 # Target to run a Python module within the environment
-run: env_create
+run: 
 	@echo "Running Python module within $(ENV_NAME) environment..."
 	conda activate $(ENV_NAME)
-	python -m src.main 
+	python -m sycamor.texture 
+
+getRadar:
+	python -m sycamor.retrieval.main
+
+classify:
+	python -m sycamor.ca.main
+
+convertECW:
+	python -m sycamor.retrieval.ecwToGeotiff
+
+plot:
+	python -m sycamor.visualisation.plot
 
 # Target to clean up the environment
 clean:

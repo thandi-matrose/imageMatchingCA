@@ -2,3 +2,8 @@ key
 data/
 .env
 OilSpill.nc
+__*
+*.pyc
+results/
+figures/
+.vscode
