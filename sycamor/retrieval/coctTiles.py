@@ -32,7 +32,7 @@ def getTileBoxes():
     
     tileBoxes = []
     for index, row in gdf.iterrows():
-        print(row) 
+        
         feature_name = row['GRID_CELL'] 
         
         geometry = row['geometry']
