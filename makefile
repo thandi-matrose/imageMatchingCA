@@ -32,3 +32,10 @@ plot:
 clean:
 	@echo "Removing conda environment $(ENV_NAME)..."
 	$(CONDA_BIN) env remove -n $(ENV_NAME)
+
+test:
+	python -m sycamor.ca.features.parallelTexture
+
+aerial:
+	python -m sycamor.retrieval.aerial.main
+

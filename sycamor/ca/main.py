@@ -1,17 +1,13 @@
-import numpy as np
-import math
-import rasterio
-import pandas as pd
+
 from sycamor.ca.classification.scheme import LandClass
 from sycamor.ca.features.localHeterogeneity import getSpeckleDivergence
 from sycamor.ca.features.logIntensity import getLogIntensity
-from sycamor.ca.features.texture import getTextureBands
+from sycamor.ca.features.texture import PROPERTIES, getTextureBands
 from sycamor.ca.membership import fuzzyClassifyCell
 from sycamor.ca.parallel_utils import AtomicCounter
 from sycamor.retrieval import dataset
 from sycamor.visualisation.plot import distributionLogIntensity, plotFeatureSet, plotRadar, plotHistogram
-from sycamor.ca.set import LOG_INTENSITY, SPECKLE_DIVERGENCE, ENERGY_GLCM, MEAN_GLCM, VARIANCE_GLCM, ClassifiedRaster
-
+from sycamor.ca.set import ClassifiedRaster, Feature
 from scipy import stats
 
 def getFeatureSet(dataset):
@@ -33,31 +29,31 @@ def getFeatureSet(dataset):
     band1 = raster.read(1)
     band2 = raster.read(2)
    
-    features[LOG_INTENSITY] = (getLogIntensity(band1), getLogIntensity(band2))
+    features[Feature.LOG_INTENSITY] = (getLogIntensity(band1), getLogIntensity(band2))
     
     #Band 2
-    features[SPECKLE_DIVERGENCE] = (getSpeckleDivergence(features[LOG_INTENSITY][0]), getSpeckleDivergence(features[LOG_INTENSITY][1]))
+    features[Feature.SPECKLE_DIVERGENCE] = (getSpeckleDivergence(features[Feature.LOG_INTENSITY][0]), getSpeckleDivergence(features[Feature.LOG_INTENSITY][1]))
        
     
-    textureFeatures = (getTextureBands(features[LOG_INTENSITY][0]),  getTextureBands(features[LOG_INTENSITY][1]))
+    textureFeatures = (getTextureBands(features[Feature.LOG_INTENSITY][0]),  getTextureBands(features[Feature.LOG_INTENSITY][1]))
     #Band 3
-    features[ENERGY_GLCM] = (textureFeatures[0]["energy"], textureFeatures[1]["energy"])
+    features[Feature.ENERGY_GLCM] = (textureFeatures[0]["energy"], textureFeatures[1]["energy"])
    
     #Band 4
-    features[MEAN_GLCM] = (textureFeatures[0]["mean"], textureFeatures[1]["mean"])
+    features[Feature.MEAN_GLCM] = (textureFeatures[0]["mean"], textureFeatures[1]["mean"])
     
     #Band 5
-    features[VARIANCE_GLCM] = (textureFeatures[0]["variance"], textureFeatures[1]["variance"])
+    features[Feature.VARIANCE_GLCM] = (textureFeatures[0]["variance"], textureFeatures[1]["variance"])
     
     plotFeatures(features, record=record)
     return features
 
 def plotFeatures(features, record):
-    distributionLogIntensity(features[LOG_INTENSITY][0], record)
-    plotHistogram(features[SPECKLE_DIVERGENCE][0], title="Speckle Divergence Histogram")
-    plotHistogram(features[ENERGY_GLCM][1], title="Energy GLCM Histogram")
-    plotHistogram(features[MEAN_GLCM][0], title="Mean GLCM Histogram")
-    plotHistogram(features[VARIANCE_GLCM][0], title="Variance GLCM Histogram")
+    distributionLogIntensity(features[Feature.LOG_INTENSITY][0], record)
+    plotHistogram(features[Feature.SPECKLE_DIVERGENCE][0], title="Speckle Divergence Histogram")
+    plotHistogram(features[Feature.ENERGY_GLCM][1], title="Energy GLCM Histogram")
+    plotHistogram(features[Feature.MEAN_GLCM][0], title="Mean GLCM Histogram")
+    plotHistogram(features[Feature.VARIANCE_GLCM][0], title="Variance GLCM Histogram")
     
     plotFeatureSet(features, record.Hart94Filename)
     
@@ -96,9 +92,9 @@ def recursiveParallelClassify(raster: ClassifiedRaster, featureSet, startInd:int
     
 #MAIN WORKFLOW
 def classify(dataset):
-    features = getFeatureSet(dataset)
-    print(features[LOG_INTENSITY])
-    
+    #features = getFeatureSet(dataset)
+    #print(features[Feature.LOG_INTENSITY])
+    print(Feature.__module__)
     #seed = seed(features)
     
     #classifiedRaster = applyTransitionRule(seed, features)

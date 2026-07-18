@@ -5,8 +5,7 @@ import rasterio as rast
 import numpy as np
 from matplotlib import pyplot as plt
 from rasterio.plot import show, adjust_band, show_hist
-
-from sycamor.ca.set import ENERGY_GLCM, LOG_INTENSITY, MEAN_GLCM, SPECKLE_DIVERGENCE, VARIANCE_GLCM
+from sycamor.ca.set import Feature 
 def plotRGBImage(src, title="Image"): 
     band1 = src.read(1)
     print("Dataset Transform:")
@@ -116,11 +115,11 @@ def plotFeatureSet(features, rasterName =""):
     for i in range(2):
         fig, axes = plt.subplots(2, 3, figsize=(18, 9))
         
-        band1 = features[LOG_INTENSITY][i]
-        band2 = features[SPECKLE_DIVERGENCE][i]
-        band3 = features[ENERGY_GLCM][i]
-        band4 = features[MEAN_GLCM][i]
-        band5 = features[VARIANCE_GLCM][i]
+        band1 = features[Feature.LOG_INTENSITY][i]
+        band2 = features[Feature.SPECKLE_DIVERGENCE][i]
+        band3 = features[Feature.ENERGY_GLCM][i]
+        band4 = features[Feature.MEAN_GLCM][i]
+        band5 = features[Feature.VARIANCE_GLCM][i]
         
         subtitle = (
             "Feature Set"
