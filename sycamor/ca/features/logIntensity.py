@@ -5,6 +5,6 @@ def getLogIntensity(data):
     Returns:
     - logarithmicInt: 
     '''
-    logInt = 10 * np.log10(np.maximum(data, 1e-10))
+    logInt = 10 * np.log10(np.maximum(data, 1, dtype=np.float32))
     
     return logInt

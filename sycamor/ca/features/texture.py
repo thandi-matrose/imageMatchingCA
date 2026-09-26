@@ -1,5 +1,3 @@
-import rasterio
-import math
 import numpy as np
 from skimage.feature import graycomatrix, graycoprops
 
@@ -14,7 +12,7 @@ def calculateGLCM(band, window_size=15):
             window = band[y:y+window_size, x:x+window_size]
             
             glcm = graycomatrix(window, distances=[1], angles=[0, np.pi/4, np.pi/2, 3*np.pi/4], 
-                                        levels=64, symmetric=True, normed=True)     
+                                        levels=128, symmetric=True, normed=True)     
             for prop in PROPERTIES:
                 val = graycoprops(glcm, prop)
                 texture[prop][y, x] = np.mean(val)
@@ -24,12 +22,11 @@ def calculateGLCM(band, window_size=15):
 def getTextureBands(intensityData):
     return calculateGLCM(intensityData, window_size=15)
 
-def quantizing(log_image, num_levels=64):
-    # 1. Shift minimum to 0
-    shifted = log_image - np.min(log_image)
+def quantizing(log_image, num_levels=128):
+    
     
     # 2. Normalize to [0, 1] range
-    normalized = shifted / np.max(shifted)
+    normalized = log_image / 25
     
     # 3. Quantize into discrete bins
     quantized = normalized * (num_levels - 1)

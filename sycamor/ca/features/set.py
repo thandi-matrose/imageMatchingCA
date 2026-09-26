@@ -3,7 +3,7 @@ import numpy as np
 from enum import Enum
 
 from sycamor.ca.classification.scheme import LandClass
-from sycamor.ca.parallel_utils import AtomicCounter
+from sycamor.ca.utils.parallel_utils import AtomicCounter
 
 #Cellular Automaton Parameters
 NEIGHBOURHOOD_SIZE = 5
@@ -19,7 +19,7 @@ class Feature(Enum):
     ''' 
     Synthetic Aperture Radar Features
     '''
-    LOG_INTENSITY = (1, "Logarithmic Intensity", "Calculated as ", "viridis")
+    LOG_INTENSITY = (1, "Logarithmic Intensity (dB)", "Calculated as ", "viridis")
     SPECKLE_DIVERGENCE = (2, "Speckle Divergence", "Calculated as ", "viridis")
     ENERGY_GLCM = (3, "Energy GLCM", "Calculated as ", "viridis")
     MEAN_GLCM = (4, "Mean GLCM", "Calculated as ", "viridis")

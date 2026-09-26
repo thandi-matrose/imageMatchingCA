@@ -1,10 +1,21 @@
-from datetime import datetime
+"""
+@author Thandi Matrose
 
+
+
+
+sycamor.retrieval.aerial.main
+"""
+
+
+
+from datetime import datetime
 from owslib.wms import WebMapService
 from owslib.map import wms130
 from sycamor.retrieval.aerial.data import getOpticalData
 from sycamor.retrieval.coctTiles import getTileBoxes
 import rasterio as rast
+from rasterio.transform import from_bounds
 
 layer_name = "Aerial Imagery_Aerial Imagery 2024", 
 path = "data/optical/tiff/"
@@ -29,6 +40,7 @@ def main():
     print("Width: ", width, "m = ",width/1000," km")
     print("Height: ",height, "m = " ,height/1000,"km")
     print()
+    
 def wms():
     # 1. Connect to the ERDAS Apollo WMS endpoint
     apollo_wms_url = "https://cityimg.capetown.gov.za/erdas-iws/ogc/wms/GeoSpatial%20Datasets?service=WMS&request=getcapabilities&"
@@ -42,33 +54,55 @@ def wms():
     # 3. Configure the GetMap parameters
     
     boxes = getTileBoxes()
-    currBox = boxes[150]
-    getImage(wms, currBox[0], currBox[1])
-
-
-
-
-
-def getImage(wms: wms130.WebMapService_1_3_0, name:str, bbox:list):
     
-    # Request the map image
+    for box in boxes:
+        #if box[0] =="W35C_20" or box[0] =="W45A_12" or box[0] =="W57C_7" or box[0] =="W58A_15" or box[0] =="W58D_5" or box[0] =="W66D_18" or box[0] =="W55D_1" or box[0] =="W46C_7":
+        #if box[0]== "W46A_11":
+        if box[0] == "W36B_17":
+            getImage(wms, box[0], box[1])
+
+
+
+
+
+def getImage(wms, name: str, bbox: list):
+    width, height = 4000, 4000
+    crs = "EPSG:4326"
+    
     img_response = wms.getmap(
-        layers=(layer_name),       # Coordinate system (e.g., EPSG:4326 for WGS 84)
+        layers=(layer_name),  # Ensure layer_name is accessible or passed as an argument
         bbox=bbox,
-        srs="EPSG:4326",
-        size=(4000, 4000),
+        srs=crs,
+        size=(width, height),
         format='image/tiff',
-        transparent=True,
-        
+        transparent=True
     )
+    
+    output_filename = f"{path}{name}_COCT_{datetime.now().strftime('%Y%m%d_%H%M%S')}.tiff"
+    
+    raw_data = img_response.read()
+    
+    transform = from_bounds(bbox[0], bbox[1], bbox[2], bbox[3], width, height)
+    
+    with rast.MemoryFile(raw_data) as memfile:
+        with memfile.open() as src:
+            # Copy the profile (bands, datatype, etc.) from the source image
+            profile = src.profile.copy()
+            
+            # Update the profile with the spatial metadata
+            profile.update({
+                'driver': 'GTiff',
+                'height': height,
+                'width': width,
+                'crs': crs,
+                'transform': transform
+            })
+            
+            # Write the final georeferenced file
+            with rast.open(output_filename, 'w', **profile) as dst:
+                dst.write(src.read())
 
-    # 4. Save the map to a file
-    output_filename = path + name +  "_COCT_"+datetime.now().strftime("%Y%m%d_%H%M%S")+".tiff"
-    with open(output_filename, 'wb') as out_file:
-        out_file.write(img_response.read())
-
-    print(f"Successfully saved WMS map to {output_filename}")
-
+    print(f"Successfully saved georeferenced GeoTIFF to {output_filename}")
 
 if __name__ == "__main__":
-    main()
+    wms()

@@ -1,92 +1,61 @@
 import numpy as np
 from skimage.feature import graycomatrix, graycoprops
+from skimage.util import view_as_windows
 from joblib import Parallel, delayed
 
 from sycamor.ca.features.logIntensity import getLogIntensity
-from sycamor.ca.set import LOG_INTENSITY
+from sycamor.ca.features.set import Feature
 from sycamor.retrieval import dataset
-from sycamor.visualisation.plot import plotHistogram, plotRadar
+from sycamor.visualisation.plot import distributionFeature
 
-window_size = 15
-properties = ['energy','mean', 'entropy', 'variance']
+levels       = 64
+WINDOW_SIZE  = 15
+angles       = [0,  np.pi / 2, ]
+props        = ['energy', 'mean', 'variance']
 
-num_levels=64
 
-def calculate_glcm_features(patch):
-    """Calculates GLCM features for a single image patch."""
-    
-    # Compute GLCM
-    glcm = graycomatrix(
-        patch, 
-        distances=[1], 
-        angles=[0, np.pi/4, np.pi/2, 3*np.pi/4], 
-        levels=256, 
-        symmetric=True, 
-        normed=True
-    )
-    texture = {}
-    # Extract texture properties
-    for prop in properties:
-        val = graycoprops(glcm, prop)
-        texture[prop] = np.mean(val)
-        
-    return texture
-    
-    
-def batchCalc(band):
-    texture = { prop: np.zeros((band.shape[0], band.shape[1])) for prop in properties}
-    
-    band = quantizing(band)
-    # Assume 'patches' is a list of cropped image segments
-    # Use n_jobs=-1 to use all available CPU cores
-    
-    patches = []
-    results = []
-    for y in range(band.shape[0]):
-        results.append([])
-        
-        rowPatches = []
-        for x in range(band.shape[1]):
-            rowPatches.append(band[y:y+window_size, x:x+window_size])  
-       
-        results[y] = Parallel(n_jobs=-1)(
-            delayed(calculate_glcm_features)(patch) for patch in rowPatches
+class TextureAnalyser:
+
+    def __init__(self, intensityData):
+        self.intensityData = intensityData
+        self.quantize()
+
+    @staticmethod
+    def _process_windows(windows, levels):
+        """windows : (N, window_size, window_size) uint8 → (N, len(props)) float"""
+        out = np.empty((windows.shape[0], len(props)), dtype=np.float64)
+        for i, win in enumerate(windows):
+            glcm = graycomatrix(
+                win,
+                distances=[1],
+                angles=angles,
+                levels=levels,
+                symmetric=True,
+                normed=True,
+            )
+            for j, prop in enumerate(props):
+                out[i, j] = np.mean(graycoprops(glcm, prop))
+        return out
+
+    def calculateGLCM(self, n_jobs: int = -1, chunk: int = 256):
+        # 1. Extract every sliding window in one shot (view, no copy)
+        windows = view_as_windows(
+            self.intensityData, (WINDOW_SIZE, WINDOW_SIZE)
+        )                                      # (H', W', ws, ws)
+        H, W = windows.shape[:2]
+        flat = windows.reshape(-1, WINDOW_SIZE, WINDOW_SIZE)
+
+        # 2. Split into chunks and dispatch
+        chunks = [flat[i:i + chunk] for i in range(0, flat.shape[0], chunk)]
+        results = Parallel(n_jobs=n_jobs, prefer="processes")(
+            delayed(self._process_windows)(c, levels) for c in chunks
         )
 
-    features_array =results
-    
-    print(features_array)
-    
-    return features_array
+        stacked = np.vstack(results).reshape(H, W, len(props))
 
-def quantizing(log_image):
-    # 1. Shift minimum to 0
-    shifted = log_image - np.min(log_image)
-    
-    # 2. Normalize to [0, 1] range
-    normalized = shifted / np.max(shifted)
-    
-    # 3. Quantize into discrete bins
-    quantized = normalized * (num_levels - 1)
-    
-    # 4. Round and cast to integer (e.g., uint8 or uint16)
-    return np.round(quantized).astype(np.uint8)
+        return {prop: stacked[..., i] for i, prop in enumerate(props)}
 
-
-def main():
-    DATASET = dataset.Dataset()
-    raster, record = DATASET.getRandomRaster()
-    plotRadar(raster, record)
-    features = {}
-    
-    #Band 1
-    band1 = raster.read(1)
-    band2 = raster.read(2)
-   
-    features[LOG_INTENSITY] = (getLogIntensity(band1), getLogIntensity(band2))
-    
-    textureFeatures = batchCalc(features[LOG_INTENSITY][0])
-    
-    plotHistogram(textureFeatures)
-
-main()
+    def quantize(self):
+        normalized = self.intensityData / 25
+        quantized  = normalized * (levels - 1)
+        self.intensityData = np.round(quantized).astype(np.uint8)

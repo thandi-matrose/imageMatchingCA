@@ -34,7 +34,7 @@ def getTileBoxes():
     for index, row in gdf.iterrows():
         
         feature_name = row['GRID_CELL'] 
-        
+
         geometry = row['geometry']
         bounds = geometry.bounds 
         
@@ -93,6 +93,11 @@ def main():
     
     with open('data/radar/bounds.txt', 'w') as file:
         file.write(str(boxes))
+    
+    print(boxes)
    
-    for i in range(len(boxes)):
-        getImage(boxes[i][1], hub, dataManager, boxes[i][0])
+    for i in range(len(utils.SAMPLE_BOXES)):
+       #RETREIVING SAMPLES
+       getImage(boxes[i][1], hub, dataManager, boxes[i][0])
+
+main()

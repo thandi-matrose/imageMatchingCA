@@ -2,12 +2,13 @@ from datetime import datetime
 
 import geopandas as gpd
 import os
+import pandas as pd
 import rasterio as rast
 from scipy import stats
-from sycamor.retrieval.main import getRadarDataset
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 import numpy as np
 import pprint as pp
+
 
 new_dir = "/home/thandi/HONOURS/imageMatchingCA/" 
 os.chdir(new_dir)
@@ -23,9 +24,8 @@ class Dataset:
     
     def __init__(self):
         vectorGdf =  gpd.read_file("data/shp/2024_Aerial_Imagery_1kmx1km_Grid.shp")
-        result = vectorGdf.merge(getRadarDataset(), on='GRID_CELL', how='left')
-        self.radarDataframe = result
-        
+        self.radarDataframe = vectorGdf.merge(getRadarDataset(), on='GRID_CELL', how='left')
+      
         with rast.open("data/geotiff/woodstock-salt/1km_RGB_5cm_W45A_21_0.TIF") as ref:
             self.HART94 = ref.crs
         
@@ -67,9 +67,19 @@ class Dataset:
         randomRecord = self.radarDataframe.sample(n=1)
         print("\n\nRandomly selected record:")
         print(randomRecord)
-        name = "data/radar/hart94/" + randomRecord["Hart94Filename"].values[0]
-        print("[READ] Opening raster " , name)
-        src =  rast.open(name)
+        name = randomRecord["Hart94Filename"].values[0]
+        return self.openRaster(name), randomRecord
+    
+    def getRaster(self, gridCell):
+            record = self.radarDataframe[self.radarDataframe['GRID_CELL'] == gridCell]
+            print("\n\nSelected record:")
+            print(record)
+            name = record["Hart94Filename"].values[0]
+            return self.openRaster(name), record
+    
+    def openRaster(self, name):
+        print("[READ] Opening raster " ,"data/radar/hart94/" +  name)
+        src =  rast.open("data/radar/hart94/" + name)
         print("[DATA] Raster loaded. Raster info\n")
         pp.pprint(src.meta)
         print("Spatial Resolution, X:",src.res[0])
@@ -80,6 +90,42 @@ class Dataset:
         print("Height: ",height, "m = " ,height/1000,"km")
         print()
         
-        return src,randomRecord
+        return src
 
+def getRadarDataset():
+    folder_path = 'data/radar/epsg4326/'
+
+    GRID_CELL = []
+    filenames = []
+    for f in os.listdir(folder_path):
+        if f.endswith('.tiff') and os.path.isfile(os.path.join(folder_path, f)):
+            gridCell = f.split('_')[0] +"_" + f.split('_')[1]
+            GRID_CELL.append(gridCell )
+            filenames.append(f+"")
+            
+    data = {
+        'GRID_CELL': GRID_CELL,
+        'EPSG4326Filename': filenames
+    }
+    geographicDf = pd.DataFrame(data)
+    
+    folder_path = 'data/radar/hart94/'
+    
+    GRID_CELL = []
+    filenames = []      
+    for f in os.listdir(folder_path):
+        if f.endswith('.tiff') and os.path.isfile(os.path.join(folder_path, f)):
+            gridCell = f.split('_')[0] +"_" + f.split('_')[1]
+            GRID_CELL.append(gridCell )
+            filenames.append(f+"")
+    
+    data = {
+        'GRID_CELL': GRID_CELL,
+        'Hart94Filename': filenames
+    }
+    projDf = pd.DataFrame(data)        
+    
+    df = geographicDf.merge(projDf,"left","GRID_CELL")
+    print(df)
+    return df
 

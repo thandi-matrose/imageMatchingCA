@@ -1,6 +1,7 @@
 from enum import Enum
 
 
+SAMPLE_BOXES = ['W36B_17',  'W35C_20', 'W45A_12', 'W46C_7', 'W55D_1', 'W57C_7', "W58A_15", 'W46A_11', "W58D_5"]
 
 
 EPSG = 4326

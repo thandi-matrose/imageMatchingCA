@@ -19,11 +19,28 @@ run:
 getRadar:
 	python -m sycamor.retrieval.main
 
+dataset:
+	python -m sycamor.ca.classification.merged.ClassifiedDataset
+
+plotSeed:
+	python -m sycamor.visualisation.seedData
+
 classify:
 	python -m sycamor.ca.main
 
 convertECW:
 	python -m sycamor.retrieval.ecwToGeotiff
+
+
+sample:
+	python -m sycamor.ca.classification.plot
+
+merge:
+	python -m sycamor.ca.classification.merge
+
+
+plotMerge:
+	python -m sycamor.visualisation.plotMerge
 
 plot:
 	python -m sycamor.visualisation.plot
@@ -39,3 +56,15 @@ test:
 aerial:
 	python -m sycamor.retrieval.aerial.main
 
+tiles:
+	python -m sycamor.retrieval.coctTiles
+
+
+
+#MAIN WORKFLOW
+
+extract:
+	python -m sycamor.ca.features.main
+
+seed:
+	python -m sycamor.ca.seed.main

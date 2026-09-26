@@ -1,10 +1,10 @@
+import os
+
 import rasterio as rast
 import numpy as np
 from matplotlib import pyplot as plt
 from rasterio.plot import show, adjust_band
-from sycamor.retrieval import dataset, datasetManager, utils, interface
-import os
-from sycamor.ca import main
+from sycamor.retrieval import dataset
 
 import geopandas as gpd
 import pandas as pd
@@ -35,45 +35,10 @@ def main():
     
 
     
-def getRadarDataset():
-    folder_path = 'data/radar/epsg4326/'
 
-    GRID_CELL = []
-    filenames = []
-    for f in os.listdir(folder_path):
-        if f.endswith('.tiff') and os.path.isfile(os.path.join(folder_path, f)):
-            gridCell = f.split('_')[0] +"_" + f.split('_')[1]
-            GRID_CELL.append(gridCell )
-            filenames.append(f+"")
-            
-    data = {
-        'GRID_CELL': GRID_CELL,
-        'EPSG4326Filename': filenames
-    }
-    geographicDf = pd.DataFrame(data)
-    
-    folder_path = 'data/radar/hart94/'
-      
-    GRID_CELL = []
-    filenames = []      
-    for f in os.listdir(folder_path):
-        if f.endswith('.tiff') and os.path.isfile(os.path.join(folder_path, f)):
-            gridCell = f.split('_')[0] +"_" + f.split('_')[1]
-            GRID_CELL.append(gridCell )
-            filenames.append(f+"")
-    
-    data = {
-        'GRID_CELL': GRID_CELL,
-        'Hart94Filename': filenames
-    }
-    projDf = pd.DataFrame(data)        
-    
-    df = geographicDf.merge(projDf,"left","GRID_CELL")
-    print(df)
-    return df
 
 def projectToHart94():
-    datasetDF = getRadarDataset()
+    datasetDF = dataset.getRadarDataset()
     datasetObj = dataset.Dataset()
     for row in datasetDF.itertuples():
         name = row.EPSG4326Filename.split("_")[0]+"_"+row.EPSG4326Filename.split("_")[1]
