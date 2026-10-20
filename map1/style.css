@@ -2,9 +2,10 @@
     --background-colour: rgb(18, 20, 20);
     --base-padding: 16px;
     --header-font: "Century";
-    --body-font: 'Arial', sans-serif;
+    --body-font: 'Latin Modern Math', serif;
     --light: white;
 
+    font-family: var(--body-font);
     font-size: 16px;
     letter-spacing: -1px;
     font-weight: 100;
@@ -23,7 +24,7 @@ h6 {
 
 h1 {
     font-size: 100px;
-    font-weight: 900;
+    font-weight: 100;
     letter-spacing: -15px;
 }
 
@@ -39,7 +40,6 @@ body {
     height: 100vh;
     width: 100vw;
     background-color: var(--background-colour);
-    font-family: var(--header-font);
 
 }
 

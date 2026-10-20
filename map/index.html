@@ -1,59 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>syCAMOR - Cellular Automata-based Matching of Optical and Radar Imagery</title>
-    <link href="style.css" rel="stylesheet" />
-
-
-
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>syCAMOR Presentation</title>
+  <!-- KaTeX CSS for equations -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+    integrity="sha384-GvrOXuhMATgEsMd3s6E5Tocmz2+U81hIom+1vJ8o+U6f34Q8rL6G1hO5x1O9g6+K" crossorigin="anonymous">
 </head>
 
 <body>
-    <section id="title">
-        <h1>syCAMOR</h1>
-        <h3>Cellular Automata-based Matching of Optical and Radar Imagery</h3>
-        <p>A Project by Thandi Matrose</p>
-    </section>
-
-    <section id="info">
-        <p>
-            I could have sworn I used to know this place right here<br />
-            I’ve forgotten my mother tongue<br />
-            It’s happened to us both<br />
-            We speak in a chorus of black box models growing larger<br />
-            and consuming more<br />
-            I don’t know how to understand what’s around<br />
-            like a distorted lens has been placed over each eye<br />
-            <br />
-            Won’t you plan a place for me<br />
-            and plan a place for you too?<br />
-            <br />
-            This is the complicated force they call a city<br />
-            You have to see it to believe it
-        </p>
-
-    </section>
-
-    <main>
-
-        <div id="map" class="map-container"></div>
-    </main>
-
-    <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
-
-    <script>
-
-        var map = new maplibregl.Map({
-            container: 'map', // container id
-            style: 'https://demotiles.maplibre.org/globe.json', // style URL
-            center: [0, 0], // starting position [lng, lat]
-            zoom: 2 // starting zoom
-        });
-    </script>
-
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
+<svg class="liquid-glass-filters" aria-hidden="true">
+  <defs>
+    <filter id="glass-refraction">
+      <!-- 1. Generate organic, fluid-like distortion waves -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="noise" />
+
+      <!-- 2. Soften the noise waves to mimic thick, smooth glass edges -->
+      <feGaussianBlur in="noise" stdDeviation="8" result="blurredNoise" />
+
+      <!-- 3. Displace the background pixels based on the red and green color channels of the noise -->
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="25" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </defs>
+</svg>
+</html>
+<script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
 
 </html>

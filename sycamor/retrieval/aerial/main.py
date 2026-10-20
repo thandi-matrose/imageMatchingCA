@@ -12,10 +12,12 @@ sycamor.retrieval.aerial.main
 from datetime import datetime
 from owslib.wms import WebMapService
 from owslib.map import wms130
+from sycamor.config.syCAMOR import WOODSTOCK_BOXES
 from sycamor.retrieval.aerial.data import getOpticalData
 from sycamor.retrieval.coctTiles import getTileBoxes
 import rasterio as rast
 from rasterio.transform import from_bounds
+
 
 layer_name = "Aerial Imagery_Aerial Imagery 2024", 
 path = "data/optical/tiff/"
@@ -58,7 +60,7 @@ def wms():
     for box in boxes:
         #if box[0] =="W35C_20" or box[0] =="W45A_12" or box[0] =="W57C_7" or box[0] =="W58A_15" or box[0] =="W58D_5" or box[0] =="W66D_18" or box[0] =="W55D_1" or box[0] =="W46C_7":
         #if box[0]== "W46A_11":
-        if box[0] == "W36B_17":
+        if box[0] in WOODSTOCK_BOXES:
             getImage(wms, box[0], box[1])
 
 

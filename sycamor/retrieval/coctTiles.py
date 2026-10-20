@@ -1,8 +1,11 @@
+from pathlib import Path
+
 import geopandas as gpd
+import rasterio
 from sycamor.retrieval import datasetManager, interface, utils
 
 
-def getImage(box, hub, dataManager, name = "img"):
+def getImage(box, hub : interface.SentinelHub, dataManager: datasetManager.DatasetManager, name = "img"):
     request = hub.createRequest(boundingBox=box)
     data = hub.sendRequest(request)
     
@@ -60,8 +63,8 @@ def getRandomBoundingBoxes(studyArea) :
     left = boundingBox[0]
     right = boundingBox[2]
     
-    heightDivisor = 25
-    widthDivisor = 25
+    heightDivisor = 15
+    widthDivisor = 15
     
     heightRange = (bottom-top)/heightDivisor
     widthRange = (right-left)/widthDivisor
@@ -79,7 +82,6 @@ def getRandomBoundingBoxes(studyArea) :
             print((newBox))
          
     
-    print(boundingBoxes)
     
     return boundingBoxes
     
@@ -100,4 +102,17 @@ def main():
        #RETREIVING SAMPLES
        getImage(boxes[i][1], hub, dataManager, boxes[i][0])
 
-main()
+def getRadar():
+    hub = interface.SentinelHub()
+    dataManager = datasetManager.DatasetManager()
+    
+    directory_path = Path("data/geotiff/woodstock-salt/")
+    boxes = getRandomBoundingBoxes(studyArea=datasetManager.StudyArea())
+    count = 0
+    
+    for box in boxes:
+        getImage(box, hub, dataManager, "woodstock/"+str(count))
+        count+=1
+        
+if __name__=="__main__":
+    getRadar()

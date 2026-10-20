@@ -1,0 +1,167 @@
+@font-face {
+  font-family: 'Latin Modern Mathy';
+  src: url('fonts/latinmodern-math.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Trident Early';
+  src: url('fonts/Web437_TridentEarly_8x16.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+:root {
+  --background-colour: rgb(18, 20, 20);
+  --base-padding: 16px;
+  --header-font: "Trident Early";
+  --body-font: 'Latin Modern Mathy', serif;
+  --light: white;
+  --dark: rgb(39, 39, 39);
+
+  font-family: var(--body-font);
+  font-size: 18px;
+  letter-spacing: -1px;
+  font-weight: 100;
+  color: var(--dark);
+  /* Safari / Old WebKit fallback */
+    image-rendering: -webkit-optimize-contrast;
+  
+    /* Firefox fallback */
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  
+    /* Standard modern choice for pixel art */
+    image-rendering: pixelated;
+  /* Disable font smoothing for standard/future CSS spec */
+    font-smooth: never;
+  
+    /* Disable font smoothing in WebKit browsers (Chrome, Safari, Edge) */
+    -webkit-font-smoothing: none;
+  
+    /* Improve Firefox rendering on macOS */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Force the browser to prioritize geometric precision */
+    text-rendering: geometricPrecision
+  
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: 100;
+}
+
+h1 {
+  font-size: 200px;
+  font-weight: 100;
+  font-family: var(--header-font);
+}
+h2{
+  text-align: center;
+  width: 100%;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+p {
+  margin: 0px;
+}
+span.robo {
+  font-family: var(--header-font);
+}
+body {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--background-colour);
+  background-image: url(background.gif);
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+#root {
+  height: fit-content;
+}
+/* The main presentation container */
+.presentation-container {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+      margin: 0;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+/* Each slide takes up the full screen */
+.slide-wrapper {
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+}
+section {
+  z-index: 100;
+}
+
+
+.slide-content {
+  align-content: center;
+  padding: 30px;
+  /*remember big streen*/
+  max-width: calc(100vw - 400px);
+  min-height: 500px;
+  
+
+
+  max-height: none;
+  /*
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.07);
+
+  -webkit-backdrop-filter: blur(16px) url(#glass-refraction);
+  backdrop-filter: blur(16px) url(#glass-refraction);
+
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+
+    inset 0 -1px 1px rgba(0, 0, 0, 0.2),
+
+    0 12px 32px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  contain: strict;*/
+}
+
+
+
+.liquid-glass-filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}

@@ -25,7 +25,7 @@ class Dataset:
     def __init__(self):
         vectorGdf =  gpd.read_file("data/shp/2024_Aerial_Imagery_1kmx1km_Grid.shp")
         self.radarDataframe = vectorGdf.merge(getRadarDataset(), on='GRID_CELL', how='left')
-      
+        
         with rast.open("data/geotiff/woodstock-salt/1km_RGB_5cm_W45A_21_0.TIF") as ref:
             self.HART94 = ref.crs
         
@@ -71,12 +71,16 @@ class Dataset:
         return self.openRaster(name), randomRecord
     
     def getRaster(self, gridCell):
-            record = self.radarDataframe[self.radarDataframe['GRID_CELL'] == gridCell]
-            print("\n\nSelected record:")
-            print(record)
-            name = record["Hart94Filename"].values[0]
-            return self.openRaster(name), record
-    
+        
+        record = self.radarDataframe[self.radarDataframe['GRID_CELL'] == gridCell]
+        print("\n\nSelected record:")
+        print(record)
+        name = record["Hart94Filename"].values[0]
+        if(gridCell == "W56C_11"):
+            name = "W56C_11_HART94_20260713_110318.tiff"
+        
+        return self.openRaster(name), record
+
     def openRaster(self, name):
         print("[READ] Opening raster " ,"data/radar/hart94/" +  name)
         src =  rast.open("data/radar/hart94/" + name)

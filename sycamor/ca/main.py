@@ -1,23 +1,62 @@
 #MAIN WORKFLOW
+import csv
+import time
+
+from sycamor.ca.classification.merged.ClassifiedDataset import getTrainingFeatureSet
+from sycamor.ca.classification.summariser import summariseTrainingSet
 from sycamor.ca.features.main import getFeatureSet
+from sycamor.ca.region_growing.main import growing
+from sycamor.ca.seed.main import seedGrid
+from sycamor.config.syCAMOR import SAMPLE_BOXES, WOODSTOCK_BOXES
+from sycamor.visualisation.seedData import plotMembership, plotTrainingSet
+from sycamor.visualisation.seedPlotter import plotSeed
 
-
-def classify(dataset, grid=None):
+def getTraining():
+    getTrainingFeatureSet(SAMPLE_BOXES)
     
-    #Step 1: Feature Extraction
-    if (grid is None):
-        features = getFeatureSet(dataset)
-    else:
-        features = getFeatureSet(dataset, grid)
-   
-    #Step 2: Seeding Function
-    #seed = seed(features)
     
-    #Step 3: Apply Region Growing Rule
-    #classifiedRaster = applyTransitionRule(seed, features)
     
-    #return classifiedRaster
-
+def classify():
+    #plotTrainingSet()
+    box = ["W55D_5"]
+    data = []
+    for grid in box:
+        '''
+        start_time = time.perf_counter()
+        seedGrid(grid)
+        end_time = time.perf_counter()
+        elapsed_time = end_time - start_time
+        data.append([grid, elapsed_time])
+        elapsed_time = end_time - start_time
+        plotMembership(grid)
+        plotSeed(grid)
+        writeElapseSeed(data)
+        '''
+        data = []
+        start_time = time.perf_counter()
+        seedlayers = growing(grid)
+        
+        end_time = time.perf_counter()
+        elapsed_time = end_time - start_time
+        data.append([grid, elapsed_time])
+        writeElapseGrowing(data)
+        
+        
+def writeElapseSeed(data):
+    with open("results/seed/time.csv", "a", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerows(data)
+def writeElapseGrowing(data):
+    with open("results/seed/growing.csv", "a", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerows(data)
+def main():
+    #getTraining()
+    #summariseTrainingSet()
+    #plotMembership("W45C_6")
+    classify()
+    
+    
 
 if __name__ == "__main__":
-    classify(DATASET, "W57C_7")
+    main()

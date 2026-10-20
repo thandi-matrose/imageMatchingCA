@@ -1,20 +1,92 @@
 
 
+from dataclasses import dataclass
 from enum import Enum
+from typing import Dict, Tuple
 
+import numpy as np
 
+@dataclass
+class GaussianDefinition:
+    """Gaussian membership function: μ(x) = exp(-(x - centre)² / (2σ²))."""
+    centre: float
+    sigma: float
+    method: str = "unknown"
+    n_samples: int = 0
 
-class TrapezoidalDefinition():
-    a : float 
-    b : float
-    c : float
-    d : float
+    def membership(self, x):
+        return np.exp(-((np.asarray(x) - self.centre) ** 2) / (2 * self.sigma ** 2))
+
+    def fwhm(self) -> float:
+        """Full width at half maximum."""
+        return 2 * np.sqrt(2 * np.log(2)) * self.sigma
+
+    def inflection_width(self) -> float:
+        """Distance between inflection points (always 2σ)."""
+        return 2 * self.sigma
+
+    def support(self, n_sigma: float = 3.0) -> Tuple[float, float]:
+        """Range where membership is effectively non-zero."""
+        return (self.centre - n_sigma * self.sigma,
+                self.centre + n_sigma * self.sigma)
+
+    def width_at(self, membership: float) -> float:
+        """Full width where membership >= given level."""
+        if membership <= 0 or membership >= 1:
+            return 0.0 if membership >= 1 else np.inf
+        return 2 * self.sigma * np.sqrt(-2 * np.log(membership))
+
+    def core_width(self) -> float:
+        return self.fwhm()
+
+    def support_width(self, n_sigma: float = 3.0) -> float:
+        return 2 * n_sigma * self.sigma
+
+    def to_dict(self):
+        return {"centre": self.centre, "sigma": self.sigma,
+                "method": self.method, "n_samples": self.n_samples}
+
+@dataclass
+class TrapezoidalDefinition:
+    a: float
+    b: float
+    c: float
+    d: float
+    method: str
+    n_samples: int
+
+    def __post_init__(self):
+        # Enforce monotonicity a <= b <= c <= d
+        vals = sorted([self.a, self.b, self.c, self.d])
+        self.a, self.b, self.c, self.d = vals
+
+    def as_tuple(self) -> Tuple[float, float, float, float]:
+        return (self.a, self.b, self.c, self.d)
+    def as_dict(self) :
+            return {"a":self.a, "b":self.b, "c":self.c, "d":self.d}
     
-    def __init__(self,a, b, c, d):
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
+    def support_width(self) -> float:
+        return self.d - self.a
+
+    def core_width(self) -> float:
+        return self.c - self.b
+
+    def membership(self, x: float) -> float:
+        if x <= self.a or x >= self.d:
+            return 0.0
+        if self.b <= x <= self.c:
+            return 1.0
+        if x < self.b:
+            return (x - self.a) / max(self.b - self.a, 1e-12)
+        return (self.d - x) / max(self.d - self.c, 1e-12)
+
+    def to_dict(self) -> Dict[str, float]:
+        return {"a": self.a, "b": self.b, "c": self.c, "d": self.d}
+
+    
+    def getDimensions(self) -> list:
+        return [self.a, self.b, self.c, self.d]
+        
 
 
 class LandClass(Enum):
@@ -27,7 +99,6 @@ class LandClass(Enum):
     atlas_codes: list
     colour: str
     lsdf_terms: list #COCT LSDF CLASSES
-    signature: TrapezoidalDefinition()
 
 
 
@@ -36,7 +107,7 @@ class LandClass(Enum):
         "Undefined",
         "Undefined Regions",
         [],
-        "#41373700",
+        "#ffffff",
         []
     )
 
@@ -45,7 +116,7 @@ class LandClass(Enum):
         "High Density Urban",
         "High density urban fabric",
         ["11100", "11210", "11220"],
-        "#914545",
+        "#FE1212",
         ["General Residential (GR)", "Mixed Use (MU)", "High Density Residential"]
     )
 
@@ -54,7 +125,7 @@ class LandClass(Enum):
         "Medium Density Urban",
         "Medium density urban fabric",
         ["11220", "11230"],
-        "#DC6868",
+        "#FFAE00",
         ["General Residential (GR)", "Single Residential (SR)"]
     )
 
@@ -63,7 +134,7 @@ class LandClass(Enum):
         "Low Density Urban",
         "Low density urban fabric",
         ["11230", "11240", "11300"],
-        "#E388DA",
+        "#FFE100",
         ["Single Residential (SR1, SR2)", "Rural Residential"]
     )
 
@@ -72,7 +143,7 @@ class LandClass(Enum):
         "Roads",
         "Roads and transport infrastructure",
         ["12200", "12210", "12220", "12230"],
-        "#282525",
+        "#FF00AA",
         ["Transport Zoning 1 (TR1)", "Transport Use", "Public Road"]
     )
 
@@ -82,7 +153,7 @@ class LandClass(Enum):
         "Industry",
         "Industry, commercial and construction",
         ["12100", "12300", "12400", "13100", "13300"],
-        "#d8d0bf",
+        "#807a85",
         ["General Industry (GI)", "Mixed Use (MU)", "Port Zoning"]
     )
 
@@ -91,7 +162,7 @@ class LandClass(Enum):
         "Vegetation",
         "Vegetation (green urban areas, forests, grassland)",
         ["14100", "14200", "31000", "32000", "32100", "32200"],
-        "#486a48",
+        "#23a937",
         ["Public Open Space (OS2)", "Environmental Conservation (OS1)",
          "Urban Green Area"]
     )
@@ -101,7 +172,7 @@ class LandClass(Enum):
         "Water",
         "Water bodies (inland and coastal)",
         ["50000", "51000", "52000", "51100", "51200"],
-        "#4A90D9",  
+        "#00A2FF",  
         ["Open Space Zoning (OS)", "Flood Plain", "Watercourse"]
     )
 
@@ -154,13 +225,17 @@ class LandClass(Enum):
     @classmethod
     def getColours(self):
         return [member.colour for member in LandClass]
-    
+    @classmethod
+    def getIndices(self):
+        return [member.index for member in LandClass]
+        
     @classmethod
     def getValues(self):
         return [member.index for member in LandClass]
 
     def __repr__(self):
         return f"<LandClass.{self.name}: index={self.index}, '{self.description}'>"
+
 
 
     

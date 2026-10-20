@@ -1,5 +1,6 @@
 from datetime import datetime
 from pprint import pprint
+import pandas as pd
 import rasterio as rast
 import numpy as np
 from matplotlib import pyplot as plt
@@ -228,10 +229,28 @@ def plotFeatureSet(features, rasterName =""):
 def addStyle():
     font_path = "/usr/share/texmf/fonts/opentype/public/lm-math/latinmodern-math.otf"
     font_manager.fontManager.addfont(font_path)
+    
+    plt.rcParams['text.usetex'] = True
+
+    plt.rcParams['text.latex.preamble'] = r'\usepackage{amsmath}'
+    plt.rcParams['text.latex.preamble'] = r'\usepackage{booktabs}'
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.serif'] = ['Latin Modern Math']
-    plt.rcParams['font.size'] = 10
-    
+    #plt.rcParams['font.size'] = 10
+def writeTable(data:pd.Dataframe, filename, figure, index=True, column_format=""):
+    with open("../latex/Data/"+filename+".tex", "w", encoding="utf-8") as file:
+        if column_format == "":
+            table = data.to_latex(index=index)
+        else:
+            table = data.to_latex(index=index, column_format=column_format)
+        text = r"""\begin{table}[htbp]
+                    \centering"""
+        text = text + r"\caption{"+figure+"}\label{tab:"+filename+"}"
+                  
+        text = text +table+ r"""
+                    \end{table}
+                    """
+        file.write(text)
 def main():
     
         addStyle()

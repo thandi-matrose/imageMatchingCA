@@ -44,7 +44,7 @@ class TextureAnalyser:
         )                                      # (H', W', ws, ws)
         H, W = windows.shape[:2]
         flat = windows.reshape(-1, WINDOW_SIZE, WINDOW_SIZE)
-
+        
         # 2. Split into chunks and dispatch
         chunks = [flat[i:i + chunk] for i in range(0, flat.shape[0], chunk)]
         results = Parallel(n_jobs=n_jobs, prefer="processes")(

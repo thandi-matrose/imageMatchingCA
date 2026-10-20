@@ -15,35 +15,60 @@ run:
 	@echo "Running Python module within $(ENV_NAME) environment..."
 	conda activate $(ENV_NAME)
 	python -m sycamor.texture 
-
+opticalClassify:
+	python -m optical.classify
+evaluate:
+	python -m evaluation.growcut.segment
 getRadar:
 	python -m sycamor.retrieval.main
 
 dataset:
 	python -m sycamor.ca.classification.merged.ClassifiedDataset
 
+make model:
+	python -m optical.randomforest
 plotSeed:
 	python -m sycamor.visualisation.seedData
 
+summarise:
+	python -m sycamor.ca.classification.summariser
+
+plotTrapez:
+	python -m sycamor.visualisation.plotters.trapez
+
+plotTables:
+	python -m sycamor.visualisation.tables
 classify:
 	python -m sycamor.ca.main
 
 convertECW:
 	python -m sycamor.retrieval.ecwToGeotiff
 
-
+match:
+	python -m sycamor.matching.main
+matchPlain:
+	python -m sycamor.matching.plain
 sample:
 	python -m sycamor.ca.classification.plot
 
 merge:
 	python -m sycamor.ca.classification.merge
 
+seedA:
+	python -m sycamor.ca.seed.main
 
 plotMerge:
 	python -m sycamor.visualisation.plotMerge
 
+runner:
+	python -m sycamor.visualisation.seedPlotter
+
 plot:
 	python -m sycamor.visualisation.plot
+
+
+regionGrow:
+	python -m sycamor.ca.region_growing.main
 
 # Target to clean up the environment
 clean:

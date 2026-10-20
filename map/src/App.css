@@ -1,0 +1,514 @@
+
+
+
+
+
+
+/* Typography */
+
+#title h2 {
+    background-color: white;
+    padding: 10px;
+}
+
+#title p {
+    text-shadow: 0 0 10px #ffffff;
+}
+
+#title .more-info{
+    margin:  40px 0;
+}
+#title .more-info p {
+    margin-bottom: 20px;
+    
+}
+
+.title-slide {
+    text-align: center;
+}
+
+.title-slide h1 {
+   
+}
+
+.title-slide h2 {
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+p {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--text-main);
+}
+
+div#poem p {
+    font-style: italic;
+    margin-bottom: 20px;
+}
+.pres-text{
+    padding: 0px 20px;
+}
+/* Layout Grids */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+.one-two-col {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: center;
+}
+.two-three-col {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.image-container {
+    width: 100%;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    max-height: 60vh;
+    border-radius: 4px;
+}
+
+/* Math block styling */
+
+span.katex-html {
+    display: none;
+}
+.math-block {
+    background: var(--accent-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+font-size: 20px;
+    overflow-x: auto;
+}
+
+.math-block p{
+    text-align: center;
+}
+
+#theory.slide-content {
+    background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+#theory-block {
+    min-width: calc(100vw - 800px);
+    text-align: center;
+}
+/* Map Container */
+.map-container {
+    width: 100%;
+    height: 60vh;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Slide indicators */
+.slide-indicator {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-family: monospace;
+    z-index: 100;
+}
+
+
+
+/*Trapezoids */
+
+/* Layout for the signature grid */
+
+/* The Carousel Container */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    /* Takes up 60% of the viewport height */
+    overflow: hidden;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eee;
+}
+
+/* Each Image Slide */
+.carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.carousel-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Responsive fallback */
+@media (max-width: 1000px) {
+    .one-two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .carousel-container {
+        height: 40vh;
+        /* Smaller on mobile */
+    }
+}
+
+
+/* Demonstration Slide Overrides */
+.demonstration-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+/* Floating Overlay Panel */
+.demonstration-overlay {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    max-width: 350px;
+    border: 1px solid #eee;
+    font-family: var(--body-font);
+}
+
+.demo-title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.demo-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.demo-tab {
+    background: transparent;
+    border: 2px solid transparent;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--body-font);
+}
+
+.demo-tab:hover {
+    background: #f8f9fa;
+}
+
+.demo-tab.active {
+    background: #f8f9fa;
+}
+
+.demo-description {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    line-height: 1.5;
+    min-height: 60px;
+    font-family: var(--body-font);
+}
+
+.demo-description p {
+    font-size: 0.95rem;
+    margin: 0;
+}
+/* Contact Page Layout */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 2rem;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.qr-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.email-block {
+    text-align: center;
+}
+
+.contact-form-container {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive fallback for smaller screens */
+@media (max-width: 900px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }/* Add this to the bottom of your existing App.css */
+    
+    /* Contact Page Layout */
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 4rem;
+        align-items: start;
+        margin-top: 2rem;
+    }
+    
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 2rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    
+    .qr-placeholder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .email-block {
+        text-align: center;
+    }
+    
+    .contact-form-container {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Responsive fallback for smaller screens */
+    @media (max-width: 900px) {
+        .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+    }
+}
+
+
+
+/* Additional DIagrams*/
+
+/* Additional Diagrams Layout */
+.additional-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 2rem;
+    height: 65vh;
+    margin-top: 1rem;
+}
+
+/* Sidebar Menu */
+.diagram-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow-y: auto;
+}
+
+.menu-header {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: transparent;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.menu-item:hover {
+    background: #f8f9fa;
+}
+
+.menu-item.active {
+    background: var(--accent-light);
+    border-left-color: var(--accent);
+}
+
+.menu-section {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+}
+
+.menu-item.active .menu-section {
+    color: var(--accent);
+}
+
+.menu-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+/* Horizontal Carousel */
+.horizontal-carousel-container {
+    position: relative;
+    overflow: hidden;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.horizontal-track {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.horizontal-slide {
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+.diagram-image-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background: #fcfcfc;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.diagram-image-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.diagram-caption {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.diagram-caption h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.diagram-caption p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .additional-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .diagram-menu {
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 1rem;
+    }
+
+    .menu-item {
+        min-width: 150px;
+    }
+
+    .horizontal-carousel-container {
+        height: 50vh;
+    }
+}
