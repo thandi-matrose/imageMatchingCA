@@ -1,9 +1,8 @@
-import React, { useRef, useState, useEffect, Component } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./App.css";
 import { usePresenterClicker } from "./hooks/usePresenterClicker";
 
 // Components
-import ParallaxMapSection from "./components/ParallaxMap";
 import { SideMenu } from "./components/SideMenu";
 
 // Slides
@@ -17,10 +16,8 @@ import { SlideTheory } from "./slides/SlideTheory";
 import { SlideSignatures } from "./slides/SlideSignatures";
 import { SlideResults } from "./slides/SlideResults";
 import { SlideMethodology } from "./slides/SlideMethodology";
-import { SlideDemonstration } from "./slides/SlideDemonstration";
 import { SlideGoodbye } from "./slides/SlideGoodbye";
 import { SlideContact } from "./slides/SlideContact";
-import { SlideAdditional } from "./slides/SlideAdditional";
 
 // Added titles for the side menu
 const SLIDES = [

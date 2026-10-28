@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+//import React, { useEffect, useState } from "react";
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
 const ParallaxMapSection = () => {
-  const [scrollY, setScrollY] = useState(0);
-
+  /*const [scrollY, setScrollY] = useState(0);
+  const map = (
+    <MapContainer
+      center={[18.438, -33.928]}
+      zoom={12}
+      style={{ height: "100vh", width: "100%" }}
+    >
+      <TileLayer url={tileUrl} attribution={attribution} maxZoom={20} />
+    </MapContainer>
+  );
   useEffect(() => {
     const handleScroll = () => {
       // Find the scroll container (presentation-container)
@@ -34,7 +41,7 @@ const ParallaxMapSection = () => {
     &copy; <a href="https://stamen.com/" target="_blank">Stamen Design</a> 
     &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> 
     &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>
-  `;
+  `;*/
   return (
     <div
       style={{
@@ -49,15 +56,7 @@ const ParallaxMapSection = () => {
         transform: `translateY(${scrollY * 0.15}px) scale(1.1)`,
         transition: "transform 0.1s ease-out",
       }}
-    >
-      <MapContainer
-        center={[18.438, -33.928]} // New York City
-        zoom={12}
-        style={{ height: "100vh", width: "100%" }}
-      >
-        <TileLayer url={tileUrl} attribution={attribution} maxZoom={20} />
-      </MapContainer>
-    </div>
+    ></div>
   );
 };
 

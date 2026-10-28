@@ -6,18 +6,6 @@ interface SlideImpactProps {
   step?: number;
 }
 
-const VOICES = [
-  {
-    icons: ["icons/urban-planning.png", "icons/activism.png"],
-    who: "The planner",
-    text: "Assessing a development against the local spatial framework, they must be able to interrogate the basis of a model's output.",
-  },
-  {
-    icons: ["icons/urban-planning.png", "icons/activism.png"],
-    who: "The activist",
-    text: "Contesting an eviction order, they must be able to scrutinise the evidence presented against their community.",
-  },
-];
 /*
 const map = (
   <div className="two-col" style={{ alignItems: "stretch" }}>

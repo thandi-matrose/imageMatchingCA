@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { Slide } from "../components/Slide";
 
 export const SlideGoodbye = () => {
