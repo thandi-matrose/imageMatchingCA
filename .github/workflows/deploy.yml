@@ -21,6 +21,10 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    # Highlight-Start
+    env:
+      CI: false
+    # Highlight-End
     runs-on: ubuntu-latest
     defaults:
       run:
