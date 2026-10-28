@@ -25,7 +25,7 @@ jobs:
     defaults:
       run:
         # Crucial step: tells GitHub Actions to execute commands inside your app directory
-        working-directory: ./YOUR_SUBDIRECTORY_NAME 
+        working-directory: ./map
     steps:
       - name: Checkout
         uses: actions/checkout@v4
