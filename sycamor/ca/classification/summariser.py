@@ -53,7 +53,7 @@ PERCENTILES = (1, 5, 10, 25, 50, 75, 90, 95, 99)
 
 
 TRAPEZOID_METHODS: Dict[str, Any] = {
-    "narrow":     (25,   40,  60,  75),   # conservative
+    "narrow":     (30,   40,  60,  70),   # conservative
     "standard":   (10,  25,  75,  90),   # recommended default
     "wide":       (2.5, 15,  85,  97.5), # generous
     "very_wide":  (0,   10,  90,  100),  # min/max with 10% trim
@@ -318,14 +318,16 @@ class ClassSignatureSummariser:
                     s1, s2 = np.var(v1, ddof=1), np.var(v2, ddof=1)
                     denom = s1 + s2
                     f = float((mu1 - mu2) ** 2 / denom) if denom > 0 else np.inf
-
+                
                     records.append({
                         "class_a": c1, "class_b": c2,
                         "class_a_name": self._class_name(c1),
                         "class_b_name": self._class_name(c2),
-                        "feature": feat.nameStr,
+                        "feature": feat.name,
                         "fisher_ratio": f,
                     })
+                    
+                   
 
         self.separability = pd.DataFrame(records)
         return self
@@ -387,7 +389,7 @@ class ClassSignatureSummariser:
         else:
             # Global eta-squared shared across classes
             agg_sep = self.eta_squared.rename(columns={"eta_squared": "fisher_ratio"})
-
+        
         # ---------------------------------------------------------------------
         # 2. Consistency score (from CV within class per feature)
         # ---------------------------------------------------------------------
@@ -426,7 +428,7 @@ class ClassSignatureSummariser:
                 else:
                     row = agg_sep[agg_sep["feature"] == feat.name]
                 s_sep = float(row["fisher_ratio"].iloc[0]) if len(row) > 0 else 0.0
-
+                
                 # Consistency
                 row = stats[(stats["class_name"] == cls_name)
                             & (stats["feature"] == feat.name)]
@@ -445,6 +447,7 @@ class ClassSignatureSummariser:
 
             # Normalise S_sep across features within this class
             max_sep = max(v["S_sep_raw"] for v in per_feat.values()) or 1.0
+            
             for fname in per_feat:
                 per_feat[fname]["S_sep"] = per_feat[fname]["S_sep_raw"] / max_sep
 
@@ -466,6 +469,7 @@ class ClassSignatureSummariser:
                     "S_uniq": scores["S_uniq"],
                     "w_raw": w_raw,
                 })
+                print(scores["S_sep"])
 
         # Normalise w_raw so weights sum to 1 per class
         weights_df = pd.DataFrame(records)
@@ -851,7 +855,7 @@ def summariseTrainingSet():
     method = "narrow"
     outdir ="results/records/sigOutputs"
 
-    s = (ClassSignatureSummariser("results/records/data.csv")
+    s = (ClassSignatureSummariser("results/records/run2/data.csv")
          .load(polarisation=polarisation)
          .compute_statistics()
          .compute_trapezoid_candidates()

@@ -15,10 +15,7 @@ export const SlideTheory = ({ step = 0 }: SlideTheoryProps) => {
       </h2>
 
       {/* Persistent Context */}
-      <div
-        id="theory-block"
-        style={{ marginBottom: "2rem", minHeight: "80px" }}
-      >
+      <div id="theory-block" style={{ minHeight: "80px" }}>
         <AnimatePresence mode="wait">
           {step === 0 && (
             <motion.div
@@ -76,33 +73,44 @@ export const SlideTheory = ({ step = 0 }: SlideTheoryProps) => {
               exit={{ opacity: 0, scale: 1.05 }}
               transition={{ duration: 0.4 }}
               className="math-block"
-              style={{ textAlign: "center", padding: "3rem 1.5rem" }}
+              style={{ textAlign: "center" }}
             >
-              <BlockMath math="CA \sim \{j, t, F_j(t), N_j(t), T\}" />
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "1rem",
-                  marginTop: "2rem",
-                  fontSize: "0.9rem",
-                  textAlign: "left",
-                }}
-              >
+              <div className="two-col">
                 <div>
-                  <InlineMath math="j" /> : cell
+                  <img
+                    src="figures/game_of_life.gif"
+                    style={{ width: "100%" }}
+                  />
+                  <p>Conway's Game of Life</p>
                 </div>
                 <div>
-                  <InlineMath math="t" /> : time step
-                </div>
-                <div>
-                  <InlineMath math="F_j(t)" /> : cell state
-                </div>
-                <div>
-                  <InlineMath math="N_j(t)" /> : neighbourhood
-                </div>
-                <div style={{ gridColumn: "span 2" }}>
-                  <InlineMath math="T" /> : transition rules
+                  <BlockMath math="CA \sim \{j, t, F_j(t), N_j(t), T\}" />
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 1fr",
+                      gap: "1rem",
+                      marginTop: "2rem",
+                      fontSize: "0.9rem",
+                      textAlign: "left",
+                    }}
+                  >
+                    <div>
+                      <InlineMath math="j" /> : cell
+                    </div>
+                    <div>
+                      <InlineMath math="t" /> : time step
+                    </div>
+                    <div>
+                      <InlineMath math="F_j(t)" /> : cell state
+                    </div>
+                    <div>
+                      <InlineMath math="N_j(t)" /> : neighbourhood
+                    </div>
+                    <div style={{ gridColumn: "span 2" }}>
+                      <InlineMath math="T" /> : transition rules
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>

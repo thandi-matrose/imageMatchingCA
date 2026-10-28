@@ -4,7 +4,7 @@ import geopandas as gpd
 import rasterio as rast
 
 from sycamor.retrieval.dataset import Dataset
-from sycamor.config.syCAMOR import SAMPLE_BOXES
+from sycamor.config.syCAMOR import SAMPLE_BOXES, WOODSTOCK_BOXES
 
 
 from rasterio.warp import calculate_default_transform
@@ -15,14 +15,14 @@ print(f"Changed directory to: {os.getcwd()}")
 
 def merge():
     DATASET = Dataset()
-    dir_path = "sycamor/ca/classification/sample/"
-    output_path = "sycamor/ca/classification/merged/"
+    dir_path = "data/sample/"
+    output_path = "data/merged/"
     for cell in SAMPLE_BOXES:
         raster, record = DATASET.getRaster(cell) 
         band1 = raster.read(1)
         band2 = raster.read(2)
         
-        name = f"classes_{cell}.tif" 
+        name = f"class{cell}.tif" 
         file_path = os.path.join(dir_path, name)
 
         with rast.open(file_path) as src: 
@@ -68,5 +68,5 @@ def main():
         
         print("New Affine Matrix:\n", dst_transform)
         print(f"Dimensions: {dst_width}x{dst_height}")
-        
-main()       
+if __name__ == "__main__" :
+    merge()  

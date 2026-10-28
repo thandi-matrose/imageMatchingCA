@@ -27,12 +27,24 @@ dataset:
 
 make model:
 	python -m optical.randomforest
+
+make plotFeature:
+	python -m sycamor.visualisation.plotFeatures
+make despeckle:
+	python -m optical.despeckle
 plotSeed:
 	python -m sycamor.visualisation.seedData
 
 summarise:
 	python -m sycamor.ca.classification.summariser
+plotGrowth:
+	python -m sycamor.visualisation.growth
+plotRandomForest:
+	python -m sycamor.visualisation.randomforest
 
+	
+plotGrowCut:
+	python -m sycamor.visualisation.growcut
 plotTrapez:
 	python -m sycamor.visualisation.plotters.trapez
 

@@ -236,7 +236,8 @@ def addStyle():
     plt.rcParams['text.latex.preamble'] = r'\usepackage{booktabs}'
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.serif'] = ['Latin Modern Math']
-    #plt.rcParams['font.size'] = 10
+    plt.rcParams['font.size'] = 10
+    
 def writeTable(data:pd.Dataframe, filename, figure, index=True, column_format=""):
     with open("../latex/Data/"+filename+".tex", "w", encoding="utf-8") as file:
         if column_format == "":

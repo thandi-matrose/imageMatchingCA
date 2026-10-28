@@ -33,16 +33,16 @@ from sycamor.config.syCAMOR import (ALPHA, GROWING_CONFIDENCE_FILTER,
                                     WINDOW, WOODSTOCK_BOXES)
 
 SEED_DIR     = "results/seed/"
-GROWING_DIR  = "results/growing/"
+GROWING_DIR  = "results/growing/tweaked/"
 GIF_DIR      = "results/classification/growing/"
 HEATMAP_DIR  = "results/classification/growing/"
 
 # Inverse distance weighting
 KERNEL_POWER = 2.0      # weight = distance ** -KERNEL_POWER
-KERNEL_GAIN  = 1.5      # gain applied to the normalised neighbourhood mean
+KERNEL_GAIN  = 1      # gain applied to the normalised neighbourhood mean
 
-EXPERIMENT_SUMMARY_CSV = "results/experiments/run_summary.csv"
-EXPERIMENT_STEPS_CSV   = "results/experiments/run_timesteps.csv"
+EXPERIMENT_SUMMARY_CSV = "results/experiments/run2/run_summary.csv"
+EXPERIMENT_STEPS_CSV   = "results/experiments/run2/run_timesteps.csv"
 
 RUN_SUMMARY_FIELDS = [
     "timestamp", "gridCell", "rows", "columns", "total_cells",
@@ -106,7 +106,7 @@ def neighbourhoodEvidence(membershipLayer: np.ndarray) -> np.ndarray:
     norm = convolve(np.ones_like(m), KERNEL, mode="constant", cval=0.0)
     with np.errstate(divide="ignore", invalid="ignore"):
         out = np.where(norm > 0, weighted / norm, 0.0)
-    return np.minimum(out * KERNEL_GAIN, 1.0)
+    return np.minimum(out*KERNEL_GAIN, 1.0)
 
 
 def alpha_quadratic_function(t: int) -> float:
@@ -246,7 +246,7 @@ def growing(gridCell: str, extra_meta: dict = None):
                     f"{TIME_TO_TERMINAL_VELOCITY}_gen-{MAX_GENERATIONS}_wind-{WINDOW}"
                     f"_alpha-{ALPHA}_part{part + 1}.gif")
         chunk[0].save(filename, save_all=True, append_images=chunk[1:],
-                      duration=50, loop=0)
+                      duration=250, loop=0)
         print(f"Saved: {filename}")
 
     return summary

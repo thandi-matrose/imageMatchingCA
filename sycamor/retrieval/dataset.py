@@ -25,9 +25,10 @@ class Dataset:
     def __init__(self):
         vectorGdf =  gpd.read_file("data/shp/2024_Aerial_Imagery_1kmx1km_Grid.shp")
         self.radarDataframe = vectorGdf.merge(getRadarDataset(), on='GRID_CELL', how='left')
-        
-        with rast.open("data/geotiff/woodstock-salt/1km_RGB_5cm_W45A_21_0.TIF") as ref:
-            self.HART94 = ref.crs
+        vector = gpd.read_file("data/shp/2024_Aerial_Imagery_1kmx1km_Grid.shp")
+        self.HART94 = vector.crs
+        #with rast.open("data/geotiff/woodstock-salt/1km_RGB_5cm_W45A_21_0.TIF") as ref:
+           # self.HART94 = ref.crs
         
     
     def convertToHart94(self, src, name):

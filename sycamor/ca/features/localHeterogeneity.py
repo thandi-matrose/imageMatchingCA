@@ -4,6 +4,7 @@ from joblib import Parallel, delayed
 
 
 def _divergence_tile(tile, window_size):
+    tile = tile.astype(np.float64, copy=False)
     mu    = uniform_filter(tile,         size=window_size, mode='reflect')
     mu_sq = uniform_filter(tile ** 2,    size=window_size, mode='reflect')
     variance = np.maximum(mu_sq - mu ** 2, 0)
@@ -17,6 +18,7 @@ def getSpeckleDivergence(intensityBand, window_size: int = 9,
     Parallel version of the speckle-divergence map D = sigma / mu.
     Splits rows into overlapping strips, computes in parallel, then crops.
     """
+    
     h, w = intensityBand.shape
     margin = window_size // 2 + 1              # +1 for reflect safety
 
@@ -39,5 +41,5 @@ def getSpeckleDivergence(intensityBand, window_size: int = 9,
     for (y0, y1, y0e, _), res in zip(strips, results):
         top = y0 - y0e
         out[y0:y1, :] = res[top:top + (y1 - y0), :]
-
+   
     return out

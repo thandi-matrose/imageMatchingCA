@@ -39,7 +39,6 @@
 
 .section-title {
     font-size: 2.5rem;
-    margin-bottom: 2rem;
     border-bottom: 2px solid var(--accent);
     padding-bottom: 0.5rem;
     display: inline-block;
@@ -54,6 +53,7 @@ p {
 div#poem p {
     font-style: italic;
     margin-bottom: 20px;
+    background-color: white;
 }
 .pres-text{
     padding: 0px 20px;
@@ -77,13 +77,23 @@ div#poem p {
     gap: 3rem;
     align-items: center;
 }
-
+.three-two-col {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 3rem;
+    align-items: center;
+}
+.three-one-col {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
 .image-container {
     width: 100%;
     background: white;
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -109,6 +119,8 @@ span.katex-html {
     border-left: 4px solid var(--accent);
 font-size: 20px;
     overflow-x: auto;
+    max-width: 700px;
+    justify-self: center;
 }
 
 .math-block p{
@@ -117,8 +129,6 @@ font-size: 20px;
 
 #theory.slide-content {
     background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 #theory-block {
     min-width: calc(100vw - 800px);
@@ -140,11 +150,14 @@ font-size: 20px;
     right: 2rem;
     font-size: 0.9rem;
     color: var(--text-muted);
-    font-family: monospace;
     z-index: 100;
 }
 
-
+h3.background-label {
+    text-align: right;
+    background-color: var(--accent);
+    font-style: italic;
+}
 
 /*Trapezoids */
 
@@ -158,9 +171,7 @@ font-size: 20px;
     /* Takes up 60% of the viewport height */
     overflow: hidden;
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    border: 1px solid #eee;
+    border: 1px solid var(--dark);
 }
 
 /* Each Image Slide */
@@ -210,7 +221,7 @@ font-size: 20px;
 .demonstration-overlay {
     position: absolute;
     top: 2rem;
-    left: 2rem;
+    right: 2rem;
     z-index: 10;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -274,7 +285,8 @@ font-size: 20px;
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: 4rem;
-    align-items: start;
+    align-items: center;
+    justify-content: center;
     margin-top: 2rem;
 }
 
@@ -286,7 +298,6 @@ font-size: 20px;
     padding: 2rem;
     background: white;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .qr-placeholder {
@@ -302,10 +313,44 @@ font-size: 20px;
 .contact-form-container {
     background: white;
     padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+.contact-form-container input {
+    border: var(--dark) 1px solid;
+    width: 100%;
+    padding:  0.8rem ;
+    border-radius: 6px;
+    font-family:  inherit ;
+    box-sizing:  border-box ;
 }
 
+.contact-form-container button {
+    padding:  0.8rem 1.5rem ;
+    border: var(--dark) 1px solid;;
+    border-radius:  6px  ;
+
+    font-size:  1rem  ;
+    font-family: inherit;
+    transition:  opacity 0.2s  ;
+}
+.contact-form-container button:hover {
+    background-color: var(--dark);
+    color: white;
+}
+
+
+form {
+    justify-content: center;
+    height: min-content;
+}
+
+.contact-form-container textarea {
+    border: var(--dark) 1px solid;
+    width: 100%;
+    padding:  0.8rem ;
+    border-radius: 6px;
+    font-family:  inherit ;
+    box-sizing:  border-box ;
+}
 /* Responsive fallback for smaller screens */
 @media (max-width: 900px) {
     .contact-grid {
@@ -330,7 +375,6 @@ font-size: 20px;
         padding: 2rem;
         background: white;
         border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
     
     .qr-placeholder {
@@ -359,7 +403,19 @@ font-size: 20px;
     }
 }
 
+#meth-nav {
+    display: none;
+}
 
+#thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#thumbnails div {
+    width: 100px;
+}
 
 /* Additional DIagrams*/
 
@@ -511,4 +567,85 @@ font-size: 20px;
     .horizontal-carousel-container {
         height: 50vh;
     }
+}
+
+/* --- Add to bottom of App.css --- */
+
+/* 1. Side Menu */
+
+
+.side-menu-track {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.side-menu-item {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+border: solid 1px transparent;
+}
+
+.side-menu-item:hover {
+    font-weight: 500;
+}
+
+.side-menu-item.active {
+    border: var(--dark) 1px solid;
+    font-style: italic;
+}
+
+
+
+.side-menu-label {
+    font-size: 0.85rem;
+    font-family: var(--body-font);
+    color: var(--text-main);
+    text-align: left;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+
+/* 2. Slide Background Overrides for Parallax Map */
+/* This makes the slides slightly transparent so the bright map is visible behind them */
+.slide-wrapper {
+    background-color: rgba(248, 249, 250, 0.88);
+    /* Matches --bg-color with transparency */
+  
+}
+
+/* Ensure presentation container is above the map */
+.presentation-container {
+    position: relative;
+    z-index: 10;
+}
+
+/* Ensure indicator is above everything */
+.slide-indicator {
+    z-index: 1000;
+}
+
+.who-box {
+    border: var(--dark) 1px solid;
+    padding: 1rem;
+    align-content: center;
+    justify-items: center;
+    width: 400px;
+}
+.who-icons {
+    display: flex;
+    padding: 20px 0;
+}
+.who-icons img {
+    width: 100px;
+}
+
+#outro {
+    text-align: center;
+    font-size: 35px;
 }

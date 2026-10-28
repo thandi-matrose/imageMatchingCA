@@ -18,11 +18,41 @@
 
 :root {
   --background-colour: rgb(18, 20, 20);
+  --accent-colour: #f67474;
   --base-padding: 16px;
   --header-font: "Trident Early";
   --body-font: 'Latin Modern Mathy', serif;
   --light: white;
   --dark: rgb(39, 39, 39);
+
+  --twilight-000: #e2d9e2;
+    /* Start / End (Off-white) */
+    --twilight-100: #a6bfca;
+    /* Soft Slate Blue */
+    --twilight-200: #6d90c0;
+    /* Mid Blue */
+    --twilight-300: #5f58b0;
+    /* Indigo */
+    --twilight-400: #531e7c;
+    /* Deep Violet */
+    --twilight-500: #2f1436;
+    /* Midnight Purple (Core/Center) */
+    --twilight-600: #64194b;
+    /* Plum Wine */
+    --twilight-700: #9f3c50;
+    /* Berry Red */
+    --twilight-800: #c0755e;
+    /* Terracotta Muted */
+    --twilight-900: #d0b39e;
+    /* Sand / Warm Beige */
+    --twilight-1000: #e2d9e2;
+    /* Perfect Loop Closure */
+  
+    /* Semantic UI tokens mapped to the palette */
+    --color-primary: var(--twilight-300);
+    --color-secondary: var(--twilight-700);
+    --color-bg-dark: var(--twilight-500);
+    --color-bg-light: var(--twilight-000);
 
   font-family: var(--body-font);
   font-size: 18px;
@@ -85,10 +115,7 @@ span.robo {
 body {
   height: 100vh;
   width: 100vw;
-  background-color: var(--background-colour);
-  background-image: url(background.gif);
-  background-size: cover;
-  background-attachment: fixed;
+  
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 0;
@@ -97,6 +124,7 @@ body {
 
 #root {
   height: fit-content;
+  
 }
 /* The main presentation container */
 .presentation-container {
@@ -112,7 +140,7 @@ body {
 /* Each slide takes up the full screen */
 .slide-wrapper {
     height: 100vh;
-    width: 100vw;
+    
     padding: 0;
     margin: 0;
     scroll-snap-align: start;
@@ -128,12 +156,21 @@ section {
 }
 
 
+
+.highlight.main {
+  background-color: var(--twilight-100);
+  color: var(--surface);
+  padding: 0 0.25em;
+}
+
 .slide-content {
+  background-color: white;
   align-content: center;
   padding: 30px;
+  justify-items: center;
   /*remember big streen*/
-  max-width: calc(100vw - 400px);
-  min-height: 500px;
+  width: calc(100vw - 400px);
+  height: calc(100vh - 200px);
   
 
 
@@ -164,4 +201,15 @@ section {
   width: 0;
   height: 0;
   pointer-events: none;
+}
+
+.side-menu {
+  position: fixed;
+  
+  bottom: 50%;
+  left: 30px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }

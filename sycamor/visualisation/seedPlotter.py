@@ -74,7 +74,9 @@ def plotClassified(band, filename="", legend=True):
     else:
         plt.savefig(filename, dpi=300, bbox_inches='tight')   
 
-def plotTrainingSeeds():
+
+
+def plotWoodstockSeeds():
     fig, axes = plt.subplots(nrows=4, ncols=4, figsize=(15,10),layout="compressed")
     #plt.tight_layout(pad=0, h_pad=0, w_pad=0)
 
@@ -104,7 +106,7 @@ def plotTrainingSeeds():
     cbar.set_ticklabels(class_labels)
     cbar.set_label('Class', fontsize=12)
     '''
-    plt.savefig('results/seed/res/'+f"allSeed"+"_"+datetime.now().strftime("%Y%m%d_%H%M%S")+".png", dpi=300, bbox_inches='tight')
+    plt.savefig('results/seed/'+f"allSeed"+"_"+datetime.now().strftime("%Y%m%d_%H%M%S")+".png", dpi=300, bbox_inches='tight')
     
     ax.clear()   
 def plotSeed(cell, filename="", title=""):
@@ -299,7 +301,10 @@ def rf():
             plotClassified(src.read(1), f"results/randomforest/{box}_rf.png")
             
 if __name__ == "__main__":
+    '''
     for cell in WOODSTOCK_BOXES:
         with rasterio.open(f"results/growcut/woodstock/{cell}.tif") as src:
             band = src.read(1)
             plotClassified(band,legend= False)
+    '''
+    plotWoodstockSeeds()

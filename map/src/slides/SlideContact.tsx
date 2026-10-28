@@ -23,13 +23,13 @@ export const SlideContact = () => {
               style={{
                 width: "200px",
                 height: "200px",
-                backgroundColor: "#e0e0e0",
+                backgroundColor: "var(--accent-light)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 borderRadius: "8px",
-                border: "2px dashed #999",
-                color: "#666",
+                border: "2px dashed var(--text-muted)",
+                color: "var(--text-muted)",
                 fontSize: "0.9rem",
                 textAlign: "center",
                 padding: "1rem",
@@ -52,10 +52,10 @@ export const SlideContact = () => {
             <div
               style={{
                 padding: "2rem",
-                background: "#e8f5e9",
+                background: "var(--primary-light)",
                 borderRadius: "8px",
                 textAlign: "center",
-                color: "#2e7d32",
+                color: "var(--primary)",
               }}
             >
               <h3 style={{ fontFamily: "inherit", margin: 0 }}>Thank you!</h3>
@@ -75,7 +75,6 @@ export const SlideContact = () => {
                     display: "block",
                     marginBottom: "0.3rem",
                     fontSize: "0.9rem",
-                    fontWeight: 600,
                   }}
                 >
                   Name
@@ -98,7 +97,6 @@ export const SlideContact = () => {
                     display: "block",
                     marginBottom: "0.3rem",
                     fontSize: "0.9rem",
-                    fontWeight: 600,
                   }}
                 >
                   Email
@@ -126,7 +124,6 @@ export const SlideContact = () => {
                     display: "block",
                     marginBottom: "0.3rem",
                     fontSize: "0.9rem",
-                    fontWeight: 600,
                   }}
                 >
                   Message
@@ -136,6 +133,11 @@ export const SlideContact = () => {
                   name="message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === " ") {
+                      e.stopPropagation(); // Prevents parent shortcuts from stealing the space
+                    }
+                  }}
                   required
                   rows={5}
                   style={{ ...inputStyle, resize: "vertical" }}
@@ -151,16 +153,8 @@ export const SlideContact = () => {
                 type="submit"
                 disabled={state.submitting}
                 style={{
-                  padding: "0.8rem 1.5rem",
-                  background: "var(--accent)",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "6px",
-                  fontSize: "1rem",
-                  fontWeight: 600,
                   cursor: state.submitting ? "not-allowed" : "pointer",
                   opacity: state.submitting ? 0.7 : 1,
-                  transition: "opacity 0.2s",
                 }}
               >
                 {state.submitting ? "Sending..." : "Send Message"}
@@ -174,12 +168,4 @@ export const SlideContact = () => {
 };
 
 // Simple inline style for inputs to keep the file self-contained
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "0.8rem",
-  borderRadius: "6px",
-  border: "1px solid #ccc",
-  fontSize: "1rem",
-  fontFamily: "inherit",
-  boxSizing: "border-box",
-};
+const inputStyle: React.CSSProperties = {};

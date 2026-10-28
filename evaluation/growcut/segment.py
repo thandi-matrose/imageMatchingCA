@@ -35,7 +35,7 @@ def segment(gridCell):
     filename = "W08A_1_HART94_20260713_110308.tiff"
     GROWCUT_PATH = "results/growcut/"
     outSegmentName = "results/growcut/"+gridCell+"_segmented.png"
-    outLabelName ="results/growcut/"+gridCell+"_label.png"
+    outLabelName ="results/growcut/FINAL/"+gridCell+"_label.png"
     radarFileName = record.Hart94Filename
     img = radarRaster.read(1)
     seedFileName = SEED_PATH+gridCell+".tif"
@@ -59,22 +59,22 @@ def segment(gridCell):
                 if val!=0: data.append([str(datetime.now()), gridCell, LandClass.from_index(val).displayName, elapsed_time, cnt, outSegmentName, outLabelName, radarFileName, seedFileName ])
             writer.writerows(data)
             
-        plotClassified(segmented[1], outLabelName)
-        outdir = "results/growcut/woodstock/"
+        plotClassified(segmented[1], outLabelName, False)
+        outdir = "results/growcut/otherwoodstock/"
         
         meta = labels.meta.copy()
         meta.update(count=2)
         
         with rast.open(outdir+gridCell+".tif", "w", **meta) as dst:
             dst.write(segmented[1], 1)
-            dst.write(segmented[0], 1)
+            dst.write(segmented[0], 2)
 
 def plotGrowCut():
     for box in WOODSTOCK_BOXES:
-        path = f'results/growcut/{box}.tif'
+        path = f'results/growcut/otherwoodstock/{box}.tif'
         with rast.open(path) as src:
-            img = src.read(2)
-        plotClassified(img, f"results/growcut/woodstock/{box}_gc.png", False)
+            img = src.read(1)
+        plotClassified(img, f"results/growcut/{box}_gc.png",legend= False)
    
 def otherMain():
     addStyle()
@@ -83,4 +83,5 @@ def otherMain():
         segment(cell)
 
 if __name__ == "__main__":
-    otherMain() 
+    #otherMain()
+    plotGrowCut() 

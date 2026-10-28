@@ -1,31 +1,44 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, Component } from "react";
 import "./App.css";
 import { usePresenterClicker } from "./hooks/usePresenterClicker";
 
-// Import all slide components
+// Components
+import ParallaxMapSection from "./components/ParallaxMap";
+import { SideMenu } from "./components/SideMenu";
+
+// Slides
 import { SlidePoem } from "./slides/SlidePoem";
+import { SlideImpact } from "./slides/SlideImpact";
 import { SlideTitle } from "./slides/SlideTitle";
+import { SlideBackground } from "./slides/SlideBackground";
+import { SlideObjectives } from "./slides/SlideObjectives";
 import { SlideMap } from "./slides/SlideMap";
 import { SlideTheory } from "./slides/SlideTheory";
 import { SlideSignatures } from "./slides/SlideSignatures";
 import { SlideResults } from "./slides/SlideResults";
 import { SlideMethodology } from "./slides/SlideMethodology";
-import { SlideAdditional } from "./slides/SlideAdditional";
-import { SlideDemonstration } from "./slides/SlideDemonstration"; // NEW IMPORT
+import { SlideDemonstration } from "./slides/SlideDemonstration";
+import { SlideGoodbye } from "./slides/SlideGoodbye";
 import { SlideContact } from "./slides/SlideContact";
+import { SlideAdditional } from "./slides/SlideAdditional";
 
+// Added titles for the side menu
 const SLIDES = [
-  { Component: SlidePoem, maxSteps: 0 },
-  { Component: SlideTitle, maxSteps: 0 },
-  { Component: SlideMap, maxSteps: 0 },
-  { Component: SlideTheory, maxSteps: 2 },
-  { Component: SlideSignatures, maxSteps: 4 },
-  { Component: SlideResults, maxSteps: 0 },
-  { Component: SlideMethodology, maxSteps: 0 },
-  { Component: SlideDemonstration, maxSteps: 4 },
-  { Component: SlideContact, maxSteps: 0 },
+  { Component: SlidePoem, maxSteps: 2, title: "Introduction" },
+  { Component: SlideMap, maxSteps: 0, title: "Study Area" },
+  { Component: SlideImpact, maxSteps: 2, title: "Impact" },
+  { Component: SlideTitle, maxSteps: 0, title: "Title" },
+  { Component: SlideBackground, maxSteps: 2, title: "Background" },
+  { Component: SlideObjectives, maxSteps: 0, title: "Objectives" },
 
-  { Component: SlideAdditional, maxSteps: 3 },
+  { Component: SlideTheory, maxSteps: 2, title: "Theory" },
+  { Component: SlideSignatures, maxSteps: 0, title: "Radar Signatures" },
+  { Component: SlideResults, maxSteps: 3, title: "Results" },
+  { Component: SlideMethodology, maxSteps: 5, title: "Methodology" },
+  //{ Component: SlideDemonstration, maxSteps: 4, title: "Demo" },
+  { Component: SlideGoodbye, maxSteps: 0, title: "Conclusion" },
+  { Component: SlideContact, maxSteps: 0, title: "Contact" },
+  //{ Component: SlideAdditional, maxSteps: 3, title: "Additional" },
 ];
 
 function App() {
@@ -79,6 +92,14 @@ function App() {
 
   return (
     <>
+      {/* 2. Side Navigation Menu */}
+      <SideMenu
+        slides={SLIDES}
+        currentIndex={currentSlideIndex}
+        onSelect={(index) => setCurrentSlideIndex(index)}
+      />
+
+      {/* 3. Presentation Content */}
       <div className="presentation-container">
         {SLIDES.map(({ Component }, index) => {
           const SlideComp = Component as React.ComponentType<{
@@ -102,6 +123,7 @@ function App() {
         })}
       </div>
 
+      {/* 4. Bottom Right Slide Indicator */}
       <div className="slide-indicator">
         {currentSlideIndex + 1} / {TOTAL_SLIDES}
         {SLIDES[currentSlideIndex].maxSteps > 0 &&

@@ -1,3 +1,5 @@
+import os
+
 from matplotlib import pyplot as plt
 import scipy
 from skimage.registration import phase_cross_correlation
@@ -21,7 +23,9 @@ from sycamor.config.syCAMOR import SAMPLE_BOXES, WOODSTOCK_BOXES
 from sycamor.retrieval.dataset import Dataset
 from sycamor.visualisation.plot import addStyle
 from sycamor.visualisation.seedPlotter import plotClassified
-
+new_dir = "/home/thandi/HONOURS/imageMatchingCA/" 
+os.chdir(new_dir)
+print(f"Changed directory to: {os.getcwd()}")
 def match(img1, img2, img3, gridCell,
           output_path: str | None = None,
           dpi: int = 200,
@@ -332,32 +336,39 @@ def _draw_legend(ax):
 
 def main():
     addStyle()
-    gridCell = "W35C_20"
     
-    for gridCell in ["W35C_20"]:
+    for gridCell in ["W45C_12"]:
     # Load two classified rasters
-        with rasterio.open(f'results/randomforest/{gridCell}_rf.tif') as opt, \
-            rasterio.open(f'results/growcut/woodstock/{gridCell}.tif') as radar:
+        with rasterio.open(f'results/randomforest/run2/despeckle_{gridCell}_rf_size=5.tif') as opt, \
+            rasterio.open(f'results/growcut/otherwoodstock/{gridCell}.tif') as radar:
             img1 = opt.read(1)
             img2 = radar.read(1)
             img2 = resize(
                     img2,
                     output_shape=img1.shape,
                     anti_aliasing=False, 
-                    order=1,  # 0: nearest, 1: bilinear, 3: bicubic, etc.
+                    order=0,  # 0: nearest, 1: bilinear, 3: bicubic, etc.
                 )
             
         dataset = Dataset()
         raster, record = dataset.getRaster(gridCell)
         img3 = raster.read(1)
+        img3 = resize(
+                            img3,
+                            output_shape=img1.shape,
+                            anti_aliasing=False, 
+                            order=0,  # 0: nearest, 1: bilinear, 3: bicubic, etc.
+                        )
+        
         result = match(img1, img2, img3,
                     gridCell=gridCell,
                     output_path=f"results/matching/{gridCell}_match.png",
                     dpi=200,
                 )
-        print(img3)
+        
+        print(np.max(img2))
                 
-    print(f"\nResult max value: {result['matchedImg'].max():.2f}")
+    #print(f"\nResult max value: {result['matchedImg'].max():.2f}")
 
 if __name__ == "__main__":
     main()

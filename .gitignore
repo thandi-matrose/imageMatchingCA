@@ -8,3 +8,5 @@ results/
 !map/public/results/
 figures/
 .vscode
+qgis/
+sycamor/ca/classification/sample/*.t*

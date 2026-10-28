@@ -8,7 +8,7 @@ const LAYERS = [
   {
     id: "rf",
     name: "Random Forest (Aerial)",
-    color: "#4A90D9",
+    color: "#6d90c0",
     url: "/rasters/rf.png", // Update with your real paths
     coordinates: [
       [18.42, -33.91],
@@ -22,7 +22,7 @@ const LAYERS = [
   {
     id: "growcut",
     name: "GrowCut Baseline",
-    color: "#DC6868",
+    color: "#c0755e",
     url: "/rasters/growcut.png",
     coordinates: [
       [18.42, -33.91],
@@ -35,7 +35,7 @@ const LAYERS = [
   {
     id: "sycamor",
     name: "syCAMOR",
-    color: "#914545",
+    color: "#9f3c50",
     url: "/rasters/sycamor.png",
     coordinates: [
       [18.42, -33.91],
@@ -49,7 +49,7 @@ const LAYERS = [
   {
     id: "match",
     name: "Registered Match",
-    color: "#486a48",
+    color: "#531e7c",
     url: "/rasters/match.png",
     coordinates: [
       [18.42, -33.91],
@@ -61,7 +61,6 @@ const LAYERS = [
       "Radar shifted onto the optical grid using phase cross-correlation.",
   },
 ];
-
 interface SlideDemonstrationProps {
   step?: number;
   setStep?: (step: number) => void;

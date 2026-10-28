@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Slide } from "../components/Slide";
 import { MapSlide } from "../components/MapSlide";
 import { InlineMath } from "react-katex";
 
+// Copy Zoning.jpg into public/figures/
 export const SlideMap = () => {
+  const [view, setView] = useState<"map" | "zoning">("map");
+
   return (
     <Slide>
       <h2 className="section-title">Study Area: Woodstock & Salt River</h2>
@@ -18,8 +21,28 @@ export const SlideMap = () => {
             Coordinates are mapped in <InlineMath math="Lo19" /> (Gauss
             Conformal).
           </p>
+          <div style={{ display: "flex", gap: "0.5rem", marginTop: "1rem" }}>
+            <button
+              className={`demo-tab ${view === "map" ? "active" : ""}`}
+              onClick={() => setView("map")}
+            >
+              Live map
+            </button>
+            <button
+              className={`demo-tab ${view === "zoning" ? "active" : ""}`}
+              onClick={() => setView("zoning")}
+            >
+              Zoning
+            </button>
+          </div>
         </div>
-        <MapSlide />
+        {view === "map" ? (
+          <MapSlide />
+        ) : (
+          <div className="image-container">
+            <img src="/figures/Zoning.jpg" alt="Zoning categories in Woodstock and Salt River" />
+          </div>
+        )}
       </div>
     </Slide>
   );

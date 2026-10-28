@@ -16,7 +16,7 @@ from sycamor.ca.features.parallelTexture import WINDOW_SIZE, TextureAnalyser
 from sycamor.ca.features.set import Feature
 import rasterio as rast
 
-from sycamor.config.syCAMOR import SEEDING_CONFIDENCE_FILTER
+from sycamor.config.syCAMOR import SEEDING_CONFIDENCE_FILTER, WOODSTOCK_BOXES
 from sycamor.retrieval.dataset import Dataset
 
 
@@ -50,7 +50,7 @@ def getFeatures(raster,name):
     meta = raster.meta.copy()
     meta.update(count=5)
     
-    with rast.open("data/geotiff/woodstock-salt/features/"+name+".tif", "w", **meta) as dst:
+    with rast.open("data/geotiff/wood/"+name+".tif", "w", **meta) as dst:
         dst.write(features[Feature.LOG_INTENSITY], 1)  
         dst.write(features[Feature.SPECKLE_DIVERGENCE], 2) 
         dst.write(features[Feature.ENERGY_GLCM], 3) 
@@ -201,16 +201,22 @@ def _process_rows(row_range):
                     active = class_index
                     high   = p
                 '''
-                minProb = 0
+                minProb = 2
                 for k, fidx in enumerate(feature_indices):
                     prob = trapezoids[ci][k].membership(sub[fidx - 1, i, j])
-                    if (k == 0 or minProb >0 and minProb>prob):
+                    if (prob >0 and minProb>prob):
                         minProb = prob
+                if minProb == 2:
+                    minProb = 0
+                print
                 membershipRast[class_index - 2, i, j] = minProb
+                
+                
+                
                 if minProb > high:
                     active = class_index
                     high   = minProb
-                '''
+               ''' 
             if high > confidence:
                 classRast[i, j] = active
 
@@ -225,6 +231,8 @@ def seedGrid(gridCell, n_workers=None):
         dt_obj = datetime.strptime(str(f)[-20:-5], "%Y%m%d_%H%M%S")
         if dt_obj > mostRecent:
             mostRecent, title = dt_obj, f
+            
+    print(title)
     with open(title, 'r', encoding='utf-8') as file:
         data = json.load(file)
 
@@ -236,7 +244,7 @@ def seedGrid(gridCell, n_workers=None):
     dataset = Dataset()
     raster, _ = dataset.getRaster(gridCell)
     getFeatures(raster, name)
-    raster = openRaster("data/geotiff/woodstock-salt/features/" + name + ".tif")
+    raster = openRaster("data/geotiff/wood/" + name + ".tif")
 
     rows, columns = raster.height, raster.width
 
@@ -296,6 +304,6 @@ def seedGrid(gridCell, n_workers=None):
             if lc.index != 0:
                 dst.write(membershipRast[lc.index - 1].astype("float32"), lc.index + 1)  
 if __name__ == "__main__" :
-    seedGrid("W08") 
+    seedGrid("W08A_1") 
     
-                            
+                        

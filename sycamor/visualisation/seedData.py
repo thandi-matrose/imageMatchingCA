@@ -18,10 +18,11 @@ from sycamor.ca.classification.scheme import LandClass
 from sycamor.ca.features.set import Feature
 from sycamor.config.syCAMOR import SAMPLE_BOXES
 from sycamor.visualisation.plot import addStyle
+from sycamor.visualisation.seedPlotter import plotClassified
 
 addStyle()
 
-CSV_PATH = "results/records/data.csv"
+CSV_PATH = "results/records/run2/data.csv"
 
 CSV_TO_FEATURE = {
     "log_intensity":  Feature.LOG_INTENSITY,
@@ -40,7 +41,7 @@ PLOTTABLE_CLASSES = [c.index for c in LandClass if c.index != 0]
 
 POLARISATION_COLOURS = {"VV": "#1f77b4", "VH": "#ff7f0e"}
 
-OUTPUT_DIR = "results/classification"
+OUTPUT_DIR = "results/classification/new"
 
 
   
@@ -454,5 +455,8 @@ def plotMembership(grid):
             
             
 if __name__ == "__main__":
-    plotMembership()
-    #plotTrainingSet()
+    #plotMembership("W55B_25")
+    with rast.open("results/seed/W08A_1.tif") as src:
+        raster = src.read(1)
+   # plotClassified(raster)
+    plotMembership("W08A_1")

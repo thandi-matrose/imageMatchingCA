@@ -8,7 +8,7 @@ Memory strategy:
   - Training: sample a fixed number of pixels per class per tile
   - Prediction: process each tile in windows, not the whole raster at once
 """
-
+import time   
 import joblib
 from skimage.transform import resize
 import os
@@ -56,9 +56,10 @@ def getOpticalFilename(gridCell):
 # Configuration
 # ---------------------------------------------------------------------------
 OPTICAL_DIR       = "data/optical/tiff"
-CLASSIFICATION_DIR = "sycamor/ca/classification/merged"
-OUTPUT_DIR        = "results/randomforest"
+CLASSIFICATION_DIR = "data/merged"
+OUTPUT_DIR        = "results/randomforest/run2"
 MODEL_PATH        = OUTPUT_DIR+"/rf_baseline_model.joblib"
+PREDICTION_CSV    = OUTPUT_DIR + "/prediction_results.csv"
 
 # Per-class cap for training samples from each tile.
 # Prevents any single class in any single tile from dominating.
@@ -140,11 +141,18 @@ def sample_tile(opt_path, cls_path, max_per_class, rng):
 # ---------------------------------------------------------------------------
 # 4. Predict per tile, in windows, preserving georeferencing
 # ---------------------------------------------------------------------------
-def predict_tile(clf, opt_path, out_path, window_size):
+def predict_tile(clf, opt_path, out_path, window_size, tile_id=None):
     """
     Predict on a single optical tile in windows and write the result as a
     single-band uint8 GeoTIFF with the same georeferencing.
+
+    Returns a dict summarising the prediction (class pixel counts, timing)
+    so it can be logged to CSV.
     """
+    t0 = time.time()
+    class_counts = {}        # {class_value: pixel_count}
+    total_pixels = 0
+
     with rasterio.open(opt_path) as src:
         profile = src.profile.copy()
         profile.update(
@@ -169,9 +177,31 @@ def predict_tile(clf, opt_path, out_path, window_size):
                     preds = clf.predict(flat).astype(np.uint8)
                     preds = preds.reshape(bh, bw)
 
+                    # --- accumulate class statistics ---
+                    vals, counts = np.unique(preds, return_counts=True)
+                    for v, c in zip(vals, counts):
+                        class_counts[int(v)] = class_counts.get(int(v), 0) + int(c)
+                    total_pixels += int(preds.size)
+
                     dst.write(preds, 1, window=window)
 
+    elapsed = time.time() - t0
 
+    row = {
+        "tile_id":          tile_id,
+        "output_path":      out_path,
+        "width":            W,
+        "height":           H,
+        "total_pixels":     total_pixels,
+        "elapsed_seconds":  round(elapsed, 2),
+    }
+    # Per-class absolute + percentage columns (class_<id>_px / _pct)
+    for cls, cnt in sorted(class_counts.items()):
+        row[f"class_{cls}_px"]  = cnt
+        row[f"class_{cls}_pct"] = round(100.0 * cnt / total_pixels, 3) \
+                                  if total_pixels else 0.0
+
+    return row
 
 
 def saveModel(clf, X_train_all, y_train_all, model_path, random_state, conf, classrep):
@@ -238,13 +268,32 @@ def trainModel(tiles):
     print("Confusion matrix:")
     conf = confusion_matrix(y_val, y_val_pred)
     print(conf)
-    '''
+      # ------------------------------------------------------------------
+    prediction_rows = []
+
+    tileWoodstock = getTiles(WOODSTOCK_BOXES)
+    for tile_id, opt_path, _ in tileWoodstock:
+        out_path = os.path.join(OUTPUT_DIR, f"{tile_id}_rf.tif")
+        print(f"Predicting {tile_id} -> {out_path}")
+        stats = predict_tile(clf, opt_path, out_path,
+                             PREDICT_WINDOW, tile_id=tile_id)
+        prediction_rows.append(stats)
+
     for tile_id, opt_path, _ in tiles:
         out_path = os.path.join(OUTPUT_DIR, f"{tile_id}_rf.tif")
         print(f"Predicting {tile_id} -> {out_path}")
-        predict_tile(clf, opt_path, out_path, PREDICT_WINDOW)
-    '''
-    
+        stats = predict_tile(clf, opt_path, out_path,
+                             PREDICT_WINDOW, tile_id=tile_id)
+        prediction_rows.append(stats)
+
+    # ------------------------------------------------------------------
+    # Write prediction summary CSV
+    # ------------------------------------------------------------------
+    results_df = pd.DataFrame(prediction_rows)
+    results_df.to_csv(PREDICTION_CSV, index=False)
+    print(f"\nSaved prediction summary to {PREDICTION_CSV}")
+    print(results_df.to_string(index=False))
+
     saveModel(clf,X_train_all, y_train_all, MODEL_PATH, RANDOM_STATE,conf, classrep)
 
 
@@ -254,13 +303,14 @@ def main():
 
 def plotRandomForest():
     for box in SAMPLE_BOXES:
-        path = f'results/randomforest/{box}_rf.tif'
+        path = f'results/randomforest/run2/{box}_rf.tif'
         with rasterio.open(path) as src:
             img = src.read(1)
-        plotClassified(img, f"results/randomforest/{box}_rf.png", False)
-if __name__ == "__main__":
+        plotClassified(img, f"results/randomforest/run2/{box}_rf.png", False)
     for box in WOODSTOCK_BOXES:
-        path = f'results/randomforest/{box}_rf.tif'
-        with rasterio.open(path) as src:
-            img = src.read(1)
-        plotClassified(img, f"results/randomforest/{box}_rf.png", False)
+            path = f'results/randomforest/run2/{box}_rf.tif'
+            with rasterio.open(path) as src:
+                img = src.read(1)
+            plotClassified(img, f"results/randomforest/run2/{box}_rf.png", False)
+if __name__ == "__main__":
+    plotRandomForest()

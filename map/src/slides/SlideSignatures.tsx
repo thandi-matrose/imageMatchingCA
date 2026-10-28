@@ -1,6 +1,7 @@
 import React from "react";
 import { Slide } from "../components/Slide";
 import { motion } from "framer-motion";
+import { highlight } from "../utils/functions";
 
 interface SlideSignaturesProps {
   step?: number;
@@ -20,29 +21,17 @@ export const SlideSignatures = ({ step = 0 }: SlideSignaturesProps) => {
 
   return (
     <Slide>
-      <h2 className="section-title">Empirical Radar Signatures</h2>
-      <div className="">
+      <h2 className="section-title">
+        Radar Signatures as Degrees of Membership
+      </h2>
+      <div className="one-two-col">
         {/* Left Column: Text */}
-        <div className="one-two-col pres-text">
+        <div className=" pres-text">
           <p>
-            Trapezoidal membership functions are derived from the 25th, 40th,
-            60th, and 75th percentiles of visually classified grid cells.
+            {highlight("Trapezoidal membership functions")} are derived from the
+            25th, 40th, 60th, and 75th percentiles of visually classified grid
+            cells.
           </p>
-          <p>
-            Note the multi-modal distributions in Medium Density Urban, which
-            require non-standard handling.
-          </p>
-        </div>
-        {/* Step indicator for the presenter */}
-        <div
-          className="pres-text"
-          style={{
-            marginTop: "2rem",
-            color: "var(--text-muted)",
-            fontSize: "0.9rem",
-          }}
-        >
-          Feature {Math.min(step + 1, images.length)} of {images.length}
         </div>
 
         {/* Right Column: Vertical Carousel */}

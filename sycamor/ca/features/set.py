@@ -19,11 +19,11 @@ class Feature(Enum):
     ''' 
     Synthetic Aperture Radar Features
     '''
-    LOG_INTENSITY = (1, "Logarithmic Intensity (dB)", "Calculated as ", "viridis")
-    SPECKLE_DIVERGENCE = (2, "Speckle Divergence", "Calculated as ", "viridis")
-    ENERGY_GLCM = (3, "Energy GLCM", "Calculated as ", "viridis")
-    MEAN_GLCM = (4, "Mean GLCM", "Calculated as ", "viridis")
-    VARIANCE_GLCM = (5, "Variance GLCM", "Calculated as ", "viridis")
+    LOG_INTENSITY = (1, "Logarithmic Intensity (dB)", "Calculated as ", "RdPu")
+    SPECKLE_DIVERGENCE = (2, "Speckle Divergence", "Calculated as ", "Purples")
+    ENERGY_GLCM = (3, "Energy GLCM", "Calculated as ", "BuPu")
+    MEAN_GLCM = (4, "Mean GLCM", "Calculated as ", "Blues")
+    VARIANCE_GLCM = (5, "Variance GLCM", "Calculated as ", "OrRd")
     
     def __new__(cls, index: int, nameStr:str, description:str , colourMap: str):
         obj = object.__new__(cls)
