@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Slide } from "../components/Slide";
 import { motion, useAnimation } from "framer-motion";
 
