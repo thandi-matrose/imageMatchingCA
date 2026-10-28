@@ -11,7 +11,7 @@ export const Slide: React.FC<SlideProps> = ({ children, id }) => {
   const ref = React.useRef(null);
   // Trigger animation when 30% of the slide is visible
   const isInView = useInView(ref, { amount: 0.3, once: false });
-
+  /*
   const variants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
@@ -19,7 +19,7 @@ export const Slide: React.FC<SlideProps> = ({ children, id }) => {
       y: 0,
       transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.2 },
     },
-  };
+  };*/
 
   return (
     <div className="slide-wrapper" ref={ref}>
@@ -28,7 +28,6 @@ export const Slide: React.FC<SlideProps> = ({ children, id }) => {
         id={id}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        variants={variants}
       >
         {children}
       </motion.div>

@@ -1,4 +1,3 @@
-import React from "react";
 import { Slide } from "../components/Slide";
 import { InlineMath } from "react-katex";
 import { motion, AnimatePresence } from "framer-motion";
