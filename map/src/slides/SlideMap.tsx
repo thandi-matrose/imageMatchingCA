@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Slide } from "../components/Slide";
 import { MapSlide } from "../components/MapSlide";
 import { InlineMath } from "react-katex";
@@ -40,7 +40,10 @@ export const SlideMap = () => {
           <MapSlide />
         ) : (
           <div className="image-container">
-            <img src="/figures/Zoning.jpg" alt="Zoning categories in Woodstock and Salt River" />
+            <img
+              src="/figures/Zoning.jpg"
+              alt="Zoning categories in Woodstock and Salt River"
+            />
           </div>
         )}
       </div>

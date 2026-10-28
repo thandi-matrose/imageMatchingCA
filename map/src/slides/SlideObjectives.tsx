@@ -1,4 +1,3 @@
-import React from "react";
 import { Slide } from "../components/Slide";
 import { AnimatePresence, motion } from "framer-motion";
 import { highlight } from "../utils/functions";
