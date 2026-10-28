@@ -76,10 +76,7 @@ export const SlideTheory = ({ step = 0 }: SlideTheoryProps) => {
             >
               <div className="two-col">
                 <div>
-                  <img
-                    src="figures/game_of_life.gif"
-                    style={{ width: "100%" }}
-                  />
+                  <img src=" game_of_life.gif" style={{ width: "100%" }} />
                   <p>Conway's Game of Life</p>
                 </div>
                 <div>

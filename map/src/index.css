@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Latin Modern Mathy';
-  src: url('fonts/latinmodern-math.otf') format('opentype');
+  src: url('latinmodern-math.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: 'Trident Early';
-  src: url('fonts/Web437_TridentEarly_8x16.woff') format('woff');
+  src: url('Web437_TridentEarly_8x16.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

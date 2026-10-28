@@ -29,9 +29,10 @@ const SLIDES = [
   { Component: SlideObjectives, maxSteps: 0, title: "Objectives" },
 
   { Component: SlideTheory, maxSteps: 2, title: "Theory" },
+
+  { Component: SlideMethodology, maxSteps: 5, title: "Methodology" },
   { Component: SlideSignatures, maxSteps: 0, title: "Radar Signatures" },
   { Component: SlideResults, maxSteps: 3, title: "Results" },
-  { Component: SlideMethodology, maxSteps: 5, title: "Methodology" },
   //{ Component: SlideDemonstration, maxSteps: 4, title: "Demo" },
   { Component: SlideGoodbye, maxSteps: 0, title: "Conclusion" },
   { Component: SlideContact, maxSteps: 0, title: "Contact" },

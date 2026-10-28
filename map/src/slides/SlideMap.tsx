@@ -41,7 +41,7 @@ export const SlideMap = () => {
         ) : (
           <div className="image-container">
             <img
-              src="/figures/Zoning.jpg"
+              src="Zoning.jpg"
               alt="Zoning categories in Woodstock and Salt River"
             />
           </div>

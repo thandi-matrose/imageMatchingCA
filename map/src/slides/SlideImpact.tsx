@@ -30,7 +30,7 @@ export const SlideImpact = ({ step = 0 }: SlideImpactProps) => {
   return (
     <Slide>
       <div className="two-col" style={{ maxWidth: "900px" }}>
-        <img style={{ width: "300px" }} src="icons/black-box.png" />
+        <img style={{ width: "300px" }} src="black-box.png" />
         <h2 className="section-title">Who gets to check the model?</h2>
       </div>
       <motion.p

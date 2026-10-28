@@ -17,26 +17,8 @@ export const SlideContact = () => {
       <div className="contact-grid">
         {/* Left Column: QR Code and Email */}
         <div className="contact-info">
-          <div className="qr-placeholder">
-            {/* TODO*/}
-            <div
-              style={{
-                width: "200px",
-                height: "200px",
-                backgroundColor: "var(--accent-light)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "8px",
-                border: "2px dashed var(--text-muted)",
-                color: "var(--text-muted)",
-                fontSize: "0.9rem",
-                textAlign: "center",
-                padding: "1rem",
-              }}
-            >
-              [Insert your SVG QR Code here]
-            </div>
+          <div className="qr-placeholder" style={{ width: "300px" }}>
+            <img src="qr.png" width={300} />
           </div>
           <div className="email-block">
             <p style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>

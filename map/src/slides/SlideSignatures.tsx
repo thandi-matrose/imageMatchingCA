@@ -8,14 +8,14 @@ interface SlideSignaturesProps {
 
 export const SlideSignatures = ({ step = 0 }: SlideSignaturesProps) => {
   const images = [
-    { src: "/results/overlap/overlap_LOG_INTENSITY.png", alt: "Log Intensity" },
+    { src: "overlap_LOG_INTENSITY.png", alt: "Log Intensity" },
     {
-      src: "/results/overlap/overlap_SPECKLE_DIVERGENCE.png",
+      src: "overlap_SPECKLE_DIVERGENCE.png",
       alt: "Speckle Divergence",
     },
-    { src: "/results/overlap/overlap_ENERGY_GLCM.png", alt: "Energy GLCM" },
-    { src: "/results/overlap/overlap_MEAN_GLCM.png", alt: "Mean GLCM" },
-    { src: "/results/overlap/overlap_VARIANCE_GLCM.png", alt: "Variance GLCM" },
+    { src: "overlap_ENERGY_GLCM.png", alt: "Energy GLCM" },
+    { src: "overlap_MEAN_GLCM.png", alt: "Mean GLCM" },
+    { src: "overlap_VARIANCE_GLCM.png", alt: "Variance GLCM" },
   ];
 
   return (

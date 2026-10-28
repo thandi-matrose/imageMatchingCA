@@ -34,7 +34,7 @@ const box = (x: number, y: number, w: number, h: number): Box => ({
   h: h * K,
 });
 const BIG = 20000;
-const F = "/figures/";
+const F = "";
 
 const STEPS: {
   label: string;

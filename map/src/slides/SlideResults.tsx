@@ -10,7 +10,7 @@ export const SlideResults = ({ step = 0 }: SlideResultsProps) => {
   // Combined array for images and corresponding text
   const carouselItems = [
     {
-      src: "/figures/W08A_1_radar.png",
+      src: " W08A_1_radar.png",
       alt: "Radar Input",
       title: "1. Raw SAR Input",
       description: (
@@ -22,7 +22,7 @@ export const SlideResults = ({ step = 0 }: SlideResultsProps) => {
       ),
     },
     {
-      src: "/figures/seed.gif", // Assuming this might be a static image or gif
+      src: "seed.gif", // Assuming this might be a static image or gif
       alt: "Seed Classification",
       title: "2. Seeding Outcomes",
       description: (
@@ -39,7 +39,7 @@ export const SlideResults = ({ step = 0 }: SlideResultsProps) => {
       ),
     },
     {
-      src: "/figures/frame.gif",
+      src: "frame.gif",
       alt: "Region Growing Animation",
       title: "3. Iterative Region Growing",
       description: (
@@ -51,7 +51,7 @@ export const SlideResults = ({ step = 0 }: SlideResultsProps) => {
       ),
     },
     {
-      src: "/figures/W08A_1_WATER.png", // Note: Added .png assuming it was a typo in original
+      src: "W08A_1_WATER.png", // Note: Added .png assuming it was a typo in original
       alt: "Neighbourhood Heatmap",
       title: "4. Neighbourhood Evidence",
       description: (
