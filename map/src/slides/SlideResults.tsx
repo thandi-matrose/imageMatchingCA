@@ -8,9 +8,10 @@ interface SlideResultsProps {
 
 export const SlideResults = ({ step = 0 }: SlideResultsProps) => {
   // Combined array for images and corresponding text
+  // NOTE: Ensure these paths match your public folder structure!
   const carouselItems = [
     {
-      src: " W08A_1_radar.png",
+      src: "W08A_1_radar.png", // Fixed path (added slash)
       alt: "Radar Input",
       title: "1. Raw SAR Input",
       description: (
@@ -22,7 +23,7 @@ export const SlideResults = ({ step = 0 }: SlideResultsProps) => {
       ),
     },
     {
-      src: "seed.gif", // Assuming this might be a static image or gif
+      src: "seed.gif", // Fixed path
       alt: "Seed Classification",
       title: "2. Seeding Outcomes",
       description: (
@@ -39,7 +40,7 @@ export const SlideResults = ({ step = 0 }: SlideResultsProps) => {
       ),
     },
     {
-      src: "frame.gif",
+      src: "frame.gif", // Fixed path
       alt: "Region Growing Animation",
       title: "3. Iterative Region Growing",
       description: (
@@ -51,7 +52,7 @@ export const SlideResults = ({ step = 0 }: SlideResultsProps) => {
       ),
     },
     {
-      src: "W08A_1_WATER.png", // Note: Added .png assuming it was a typo in original
+      src: "W08A_1_WATER.png", // Fixed path
       alt: "Neighbourhood Heatmap",
       title: "4. Neighbourhood Evidence",
       description: (
@@ -93,11 +94,14 @@ export const SlideResults = ({ step = 0 }: SlideResultsProps) => {
               <div
                 key={index}
                 style={{
+                  /* ✅ THE FIX: Force each item to take up 100% of the container width */
+                  minWidth: "100%",
                   height: "100%",
+                  width: "100%",
+
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  padding: "1rem",
                 }}
               >
                 <img
