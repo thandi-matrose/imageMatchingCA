@@ -69,6 +69,12 @@ div#poem p {
     gap: 3rem;
     align-items: center;
 }
+.one-four-col {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        gap: 3rem;
+        align-items: center;
+}
 .two-three-col {
     display: grid;
     grid-template-columns: 2fr 3fr;
@@ -169,7 +175,6 @@ h3.background-label {
     /* Takes up 60% of the viewport height */
     overflow: hidden;
     background: white;
-    border: 1px solid var(--dark);
 }
 
 /* Each Image Slide */
@@ -182,7 +187,7 @@ h3.background-label {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 0px;
     box-sizing: border-box;
 }
 

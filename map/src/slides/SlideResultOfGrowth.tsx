@@ -1,6 +1,6 @@
 import { Slide } from "../components/Slide";
-import { InlineMath } from "react-katex";
 import { motion, AnimatePresence } from "framer-motion";
+import { highlight } from "../utils/functions";
 
 interface SlideGrowthResultsProps {
   step?: number;
@@ -11,7 +11,7 @@ export const SlideGrowthResults = ({ step = 0 }: SlideGrowthResultsProps) => {
     <Slide>
       <h2 className="section-title">Results of Growth</h2>
 
-      <div className="two-col">
+      <div className="two-three-col" style={{ width: "80%" }}>
         {/* Left Column: Dynamic Text */}
         <div
           style={{
@@ -33,32 +33,23 @@ export const SlideGrowthResults = ({ step = 0 }: SlideGrowthResultsProps) => {
                   Tuning the CA Parameters
                 </h3>
                 <p>
-                  <strong>
-                    Neighbourhood Window (<InlineMath math="W" />
-                    ):
-                  </strong>
-                  A 3×3 Moore neighbourhood was chosen. Larger windows smoothed
-                  the results too aggressively, erasing fine urban features like
+                  <strong>{highlight("Neighbourhood Window")}:</strong> A 3×3
+                  Moore neighbourhood was chosen. Larger windows smoothed the
+                  results too aggressively, erasing fine urban features like
                   narrow roads.
                 </p>
                 <p>
-                  <strong>
-                    Time to Terminal Velocity (<InlineMath math="t_{max}" />
-                    ):
-                  </strong>{" "}
+                  <strong>{highlight("Time to Terminal Velocity")}:</strong>{" "}
                   Controls how quickly we trust the neighbourhood over the
                   pixel's own features. Setting this too low caused the
                   algorithm to "flood" the map before pixels could be evaluated
                   locally.
                 </p>
                 <p>
-                  <strong>
-                    Alpha (<InlineMath math="\alpha" />
-                    ):
-                  </strong>{" "}
-                  The balance parameter. The quadratic scaling ensures early
-                  growth is based on strong features, transitioning to
-                  neighbourhood context in later generations.
+                  <strong>{highlight("Alpha")}:</strong> The balance parameter.
+                  The quadratic scaling ensures early growth is based on strong
+                  features, transitioning to neighbourhood context in later
+                  generations.
                 </p>
               </motion.div>
             )}
@@ -122,7 +113,6 @@ export const SlideGrowthResults = ({ step = 0 }: SlideGrowthResultsProps) => {
           style={{
             position: "relative",
             minHeight: "400px",
-            background: "#f8f9fa",
           }}
         >
           <AnimatePresence mode="wait">

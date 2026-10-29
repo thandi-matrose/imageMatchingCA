@@ -11,6 +11,7 @@ export const SlideRecommendations = () => {
           gridTemplateColumns: "1fr 1fr",
           gap: "2rem",
           marginTop: "2rem",
+          fontSize: "21px",
         }}
       >
         <div
@@ -18,7 +19,6 @@ export const SlideRecommendations = () => {
             background: "white",
             padding: "1.5rem",
             borderRadius: "12px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
           }}
         >
           <h3 style={{ color: "var(--accent)", marginBottom: "1rem" }}>
@@ -26,9 +26,9 @@ export const SlideRecommendations = () => {
           </h3>
           <ul style={{ paddingLeft: "1.2rem", lineHeight: "1.6" }}>
             <li style={{ marginBottom: "0.8rem" }}>
-              <strong>Multi-modal Signatures:</strong> Implement Gaussian
-              Mixture Models to split classes that have multiple local maxima
-              (e.g., Medium Density Urban).
+              <strong>Multi-modal Signatures:</strong> Implement multi-element
+              trapezoids to split classes that have multiple local maxima (e.g.,
+              Medium Density Urban).
             </li>
             <li style={{ marginBottom: "0.8rem" }}>
               <strong>VH Polarisation:</strong> Introduce the VV-VH ratio as a
@@ -48,7 +48,6 @@ export const SlideRecommendations = () => {
             background: "white",
             padding: "1.5rem",
             borderRadius: "12px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
           }}
         >
           <h3 style={{ color: "var(--accent)", marginBottom: "1rem" }}>

@@ -16,10 +16,7 @@ const OBJECTIVES: React.ReactNode[] = [
     Find the best {highlight("CA state space")} for{" "}
     {highlight("multi-temporal SAR")}
   </>,
-  <>
-    Find the {highlight("neighbourhood radius")} and kernel that{" "}
-    {highlight("minimise RMSE")}
-  </>,
+  <>Find the {highlight("neighbourhood radius")} and kernel maximises match</>,
   <>
     {highlight("Georeference SAR")} using {highlight("mutual information")} from
     aerial matching

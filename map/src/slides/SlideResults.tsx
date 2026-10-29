@@ -82,7 +82,6 @@ export const SlideResults = ({ step = 0 }: SlideResultsProps) => {
             position: "relative",
             overflow: "hidden",
             borderRadius: "12px",
-            background: "#f8f9fa",
           }}
         >
           <motion.div
@@ -97,8 +96,6 @@ export const SlideResults = ({ step = 0 }: SlideResultsProps) => {
                   /* ✅ THE FIX: Force each item to take up 100% of the container width */
                   minWidth: "100%",
                   height: "100%",
-                  width: "100%",
-
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -112,7 +109,6 @@ export const SlideResults = ({ step = 0 }: SlideResultsProps) => {
                     maxHeight: "100%",
                     objectFit: "contain",
                     borderRadius: "8px",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                   }}
                 />
               </div>

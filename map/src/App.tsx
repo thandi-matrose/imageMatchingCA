@@ -26,15 +26,12 @@ import { SlideRecommendations } from "./slides/SlideRecommendations";
 const SLIDES = [
   { Component: SlidePoem, maxSteps: 2, title: "Introduction" },
   { Component: SlideMap, maxSteps: 0, title: "Study Area" },
-
-  { Component: SlideTitle, maxSteps: 0, title: "Title" },
   { Component: SlideImpact, maxSteps: 2, title: "Impact" },
+  { Component: SlideTitle, maxSteps: 0, title: "Title" },
   { Component: SlideBackground, maxSteps: 2, title: "Background" },
   { Component: SlideObjectives, maxSteps: 0, title: "Objectives" },
-
-  { Component: SlideTheory, maxSteps: 2, title: "Theory" },
-
-  { Component: SlideMethodology, maxSteps: 5, title: "Methodology" },
+  { Component: SlideTheory, maxSteps: 0, title: "Theory" }, // Changed to 0
+  { Component: SlideMethodology, maxSteps: 4, title: "Methodology" },
   { Component: SlideSignatures, maxSteps: 0, title: "Radar Signatures" },
   { Component: SlideResults, maxSteps: 3, title: "Results" },
   //{ Component: SlideDemonstration, maxSteps: 4, title: "Demo" },

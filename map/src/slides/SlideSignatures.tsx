@@ -1,6 +1,5 @@
 import { Slide } from "../components/Slide";
 import { motion } from "framer-motion";
-import { highlight } from "../utils/functions";
 
 interface SlideSignaturesProps {
   step?: number;
@@ -23,13 +22,12 @@ export const SlideSignatures = ({ step = 0 }: SlideSignaturesProps) => {
       <h2 className="section-title">
         Radar Signatures as Degrees of Membership
       </h2>
-      <div className="one-two-col">
+      <div className="one-four-col">
         {/* Left Column: Text */}
         <div className=" pres-text">
           <p>
-            {highlight("Trapezoidal membership functions")} are derived from the
-            25th, 40th, 60th, and 75th percentiles of visually classified grid
-            cells.
+            Trapezoidal membership functions are derived from the 25th, 40th,
+            60th, and 75th percentiles of visually classified grid cells.
           </p>
         </div>
 
