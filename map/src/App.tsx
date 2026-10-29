@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./App.css";
 import { usePresenterClicker } from "./hooks/usePresenterClicker";
-
+import "katex/dist/katex.min.css";
 // Components
 import { SideMenu } from "./components/SideMenu";
 
@@ -18,6 +18,9 @@ import { SlideResults } from "./slides/SlideResults";
 import { SlideMethodology } from "./slides/SlideMethodology";
 import { SlideGoodbye } from "./slides/SlideGoodbye";
 import { SlideContact } from "./slides/SlideContact";
+import { SlideGrowthResults } from "./slides/SlideResultOfGrowth";
+import { SlideAnalysis } from "./slides/SlideAnalysis";
+import { SlideRecommendations } from "./slides/SlideRecommendations";
 
 // Added titles for the side menu
 const SLIDES = [
@@ -34,6 +37,11 @@ const SLIDES = [
   { Component: SlideSignatures, maxSteps: 0, title: "Radar Signatures" },
   { Component: SlideResults, maxSteps: 3, title: "Results" },
   //{ Component: SlideDemonstration, maxSteps: 4, title: "Demo" },
+
+  { Component: SlideGrowthResults, maxSteps: 1, title: "Growth Results" },
+  { Component: SlideAnalysis, maxSteps: 0, title: "Analysis" },
+  { Component: SlideRecommendations, maxSteps: 0, title: "Recommendations" },
+
   { Component: SlideGoodbye, maxSteps: 0, title: "Conclusion" },
   { Component: SlideContact, maxSteps: 0, title: "Contact" },
   //{ Component: SlideAdditional, maxSteps: 3, title: "Additional" },
