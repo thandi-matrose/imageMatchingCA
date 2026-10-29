@@ -26,8 +26,9 @@ import { SlideRecommendations } from "./slides/SlideRecommendations";
 const SLIDES = [
   { Component: SlidePoem, maxSteps: 2, title: "Introduction" },
   { Component: SlideMap, maxSteps: 0, title: "Study Area" },
-  { Component: SlideImpact, maxSteps: 2, title: "Impact" },
+
   { Component: SlideTitle, maxSteps: 0, title: "Title" },
+  { Component: SlideImpact, maxSteps: 2, title: "Impact" },
   { Component: SlideBackground, maxSteps: 2, title: "Background" },
   { Component: SlideObjectives, maxSteps: 0, title: "Objectives" },
 
