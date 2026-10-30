@@ -9,7 +9,7 @@ export const SlideMap = () => {
   return (
     <Slide>
       <h2 className="section-title">Study Area: Woodstock & Salt River</h2>
-      <div className="two-col">
+      <div className="one-three-col">
         <div>
           <p>
             An area of ~4.2 km² experiencing rapid gentrification. We need
