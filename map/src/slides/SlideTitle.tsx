@@ -8,7 +8,7 @@ export const SlideTitle = () => {
   return (
     <Slide id="title">
       <div className="title-slide">
-        <p>Honours Thesis</p>
+        <p>Honours Project</p>
         <h1>syCAMOR</h1>
         <h2>Cellular Automata-based Matching of Optical and Radar Imagery</h2>
         <div className="more-info">
