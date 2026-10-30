@@ -21,16 +21,18 @@ import { SlideContact } from "./slides/SlideContact";
 import { SlideGrowthResults } from "./slides/SlideResultOfGrowth";
 import { SlideAnalysis } from "./slides/SlideAnalysis";
 import { SlideRecommendations } from "./slides/SlideRecommendations";
+import { SlideBibliography } from "./slides/SlideBibliography";
 
 // Added titles for the side menu
 const SLIDES = [
-  { Component: SlidePoem, maxSteps: 2, title: "Introduction" },
+  { Component: SlidePoem, maxSteps: 0, title: "Introduction" },
   { Component: SlideMap, maxSteps: 0, title: "Study Area" },
   { Component: SlideImpact, maxSteps: 2, title: "Impact" },
   { Component: SlideTitle, maxSteps: 0, title: "Title" },
   { Component: SlideBackground, maxSteps: 2, title: "Background" },
-  { Component: SlideObjectives, maxSteps: 0, title: "Objectives" },
-  { Component: SlideTheory, maxSteps: 0, title: "Theory" }, // Changed to 0
+
+  { Component: SlideTheory, maxSteps: 0, title: "Theory" },
+  { Component: SlideObjectives, maxSteps: 0, title: "Objectives" }, // Changed to 0
   { Component: SlideMethodology, maxSteps: 4, title: "Methodology" },
   { Component: SlideSignatures, maxSteps: 0, title: "Radar Signatures" },
   { Component: SlideResults, maxSteps: 3, title: "Results" },
@@ -41,6 +43,7 @@ const SLIDES = [
   { Component: SlideRecommendations, maxSteps: 0, title: "Recommendations" },
 
   { Component: SlideGoodbye, maxSteps: 0, title: "Conclusion" },
+  { Component: SlideBibliography, maxSteps: 0, title: "Bibliography" },
   { Component: SlideContact, maxSteps: 0, title: "Contact" },
   //{ Component: SlideAdditional, maxSteps: 3, title: "Additional" },
 ];
