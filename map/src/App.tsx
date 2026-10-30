@@ -7,7 +7,6 @@ import { SideMenu } from "./components/SideMenu";
 
 // Slides
 import { SlidePoem } from "./slides/SlidePoem";
-import { SlideImpact } from "./slides/SlideImpact";
 import { SlideTitle } from "./slides/SlideTitle";
 import { SlideBackground } from "./slides/SlideBackground";
 import { SlideObjectives } from "./slides/SlideObjectives";
@@ -27,7 +26,6 @@ import { SlideBibliography } from "./slides/SlideBibliography";
 const SLIDES = [
   { Component: SlidePoem, maxSteps: 0, title: "Introduction" },
   { Component: SlideMap, maxSteps: 0, title: "Study Area" },
-  { Component: SlideImpact, maxSteps: 2, title: "Impact" },
   { Component: SlideTitle, maxSteps: 0, title: "Title" },
   { Component: SlideBackground, maxSteps: 2, title: "Background" },
 
