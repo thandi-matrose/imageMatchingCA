@@ -18,8 +18,8 @@ const OBJECTIVES: React.ReactNode[] = [
   </>,
   <>Find the {highlight("neighbourhood radius")} and kernel maximises match</>,
   <>
-    {highlight("Georeference SAR")} using {highlight("mutual information")} from
-    aerial matching
+    {highlight("Match SAR")} using {highlight("mutual information")} from aerial
+    matching
   </>,
   <>Make the {highlight("transition rules visible")}</>,
 ];

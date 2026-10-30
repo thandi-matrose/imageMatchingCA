@@ -56,28 +56,6 @@ export const SlideGrowthResults = ({ step = 0 }: SlideGrowthResultsProps) => {
 
             {step === 1 && (
               <motion.div
-                key="step1"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-              >
-                <h3 style={{ color: "var(--accent)", marginBottom: "1rem" }}>
-                  Parameter Effects
-                </h3>
-                <p>
-                  By dynamically recalculating the IDW kernel on the{" "}
-                  <em>classified</em> cells at each step (rather than raw
-                  features), we prevent "class bleeding".
-                </p>
-                <p>
-                  Compare the smooth, contiguous regions of syCAMOR to the
-                  salt-and-pepper noise of pixel-wise classifiers.
-                </p>
-              </motion.div>
-            )}
-
-            {step === 2 && (
-              <motion.div
                 key="step2"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
