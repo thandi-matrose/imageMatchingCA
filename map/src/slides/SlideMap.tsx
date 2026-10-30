@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Slide } from "../components/Slide";
-import { MapSlide } from "../components/MapSlide";
 import { InlineMath } from "react-katex";
 
 // Copy Zoning.jpg into public/figures/
