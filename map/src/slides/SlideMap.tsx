@@ -37,7 +37,12 @@ export const SlideMap = () => {
           </div>
         </div>
         {view === "map" ? (
-          <MapSlide />
+          <div className="image-container">
+            <img
+              src="CapeTownBlocks.png"
+              alt="Zoning categories in Woodstock and Salt River"
+            />
+          </div>
         ) : (
           <div className="image-container">
             <img
