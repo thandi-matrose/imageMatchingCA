@@ -69,6 +69,13 @@ div#poem p {
     gap: 3rem;
     align-items: center;
 }
+
+.one-three-col {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 3rem;
+    align-items: center;
+}
 .one-four-col {
         display: grid;
         grid-template-columns: 1fr 4fr;
